@@ -1,0 +1,91 @@
+@* @model IEnumerable<ProyetoInmobiliaria.Models.Propietario>
+@{
+    ViewData["Title"] = "Propietario";
+}
+
+<h2 class="h2-inquilino-background">Gestión de Propietarios</h2>
+
+@await Html.PartialAsync("TablaModal")
+
+<div class="container mt-4 text-center">
+    <div class="image-container mt-5">
+        <img src="~/img/5.1.jpg" class="centered-image" alt="" />
+        <div class="image-caption mt-3">
+            <h5>Agentes Inmobiliarios</h5>
+            <p>Su futuro esta bien cuidado</p>
+        </div>
+    </div>
+</div>
+<ul>
+    @foreach(var item in Model){
+    <li>@Html.DisplayFor(modelItem => item.Nombre)</li>
+    }
+</ul>
+
+@section Scripts {
+    <script src="~/js/editModal.js"></script>
+} *@
+
+@model IEnumerable<ProyetoInmobiliaria.Models.Propietario>
+
+@{
+    ViewData["Title"] = "Propietarios";
+}
+
+<h1>Propietarios</h1>
+
+<p>
+    <a href="Propietario/Editar">Crear</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+			<th>
+				@Html.DisplayNameFor(model => model.IdPropietario)
+			</th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Apellido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dni)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefono)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Correo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdPropietario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dni)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefono)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Correo)
+            </td>
+			<td>
+                @Html.ActionLink("Editar", "Editar", "Propietario", new { id= item.IdPropietario })
+			</td>
+        </tr>
+}
+    </tbody>
+</table>

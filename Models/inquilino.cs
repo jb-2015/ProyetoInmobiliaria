@@ -1,9 +1,16 @@
+using System.ComponentModel.DataAnnotations;
+
+namespace ProyetoInmobiliaria.Models;
 public class Inquilino
 {
-    private int id_inquilino {get; set;}
-    private string nombre {get; set;}
-    private string apellido {get; set;}
-    private string direccion {get; set;}
-    private string telefono {get; set;}
+    [Key]
+    public int IdInquilino {get; set;}
+    public int Dni {get; set;}
+    public string? Apellido {get; set;}
+    public string? Nombre {get; set;}
+    public string? Telefono {get; set;}
+    public string? Correo {get; set;}
+    public bool Estado {get; set;}
     
+   
 }

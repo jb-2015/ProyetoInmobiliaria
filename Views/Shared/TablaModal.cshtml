@@ -1,0 +1,41 @@
+@* Views/Shared/TablaModal.cshtml *@
+
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Editar Registro</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editForm">
+                    <div class="mb-3">
+                        <label for="editDni" class="form-label">DNI</label>
+                        <input type="text" class="form-control" id="editDni" name="Dni" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="editApellido" class="form-label">Apellido</label>
+                        <input type="text" class="form-control" id="editApellido" name="Apellido" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="editNombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="editNombre" name="Nombre" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="editTelefono" class="form-label">Teléfono</label>
+                        <input type="text" class="form-control" id="editTelefono" name="Telefono" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="editEstado" class="form-label">Estado</label>
+                        <input type="text" class="form-control" id="editEstado" name="Estado" />
+                    </div>
+                    <input type="hidden" id="editId" name="Id" />
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="saveChanges">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
