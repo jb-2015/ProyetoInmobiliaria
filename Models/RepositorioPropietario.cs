@@ -12,7 +12,7 @@ public class RepositorioPropietario{
 
     public List<Propietario> Listar(){
         
-        return _context.Propietario.where(i => i.Estado == true).ToList();
+        return _context.Propietario.Where(i => i.Estado == true).ToList();
     }
     public Propietario? Obtener(int Id){
         Propietario? propietario = _context.Propietario.Find(Id);

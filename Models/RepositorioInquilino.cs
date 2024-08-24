@@ -43,7 +43,7 @@ public class RepositorioInquilino
 
     public List<Inquilino> Listar()
     {
-        return _context.Inquilino.where(i => i.Estado==true).ToList(); // Debería ser Inquilino
+        return _context.Inquilino.Where(i => i.Estado==true).ToList(); // Debería ser Inquilino
     }
 }
 

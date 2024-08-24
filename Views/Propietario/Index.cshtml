@@ -1,30 +1,3 @@
-@* @model IEnumerable<ProyetoInmobiliaria.Models.Propietario>
-@{
-    ViewData["Title"] = "Propietario";
-}
-
-<h2 class="h2-inquilino-background">Gestión de Propietarios</h2>
-
-@await Html.PartialAsync("TablaModal")
-
-<div class="container mt-4 text-center">
-    <div class="image-container mt-5">
-        <img src="~/img/5.1.jpg" class="centered-image" alt="" />
-        <div class="image-caption mt-3">
-            <h5>Agentes Inmobiliarios</h5>
-            <p>Su futuro esta bien cuidado</p>
-        </div>
-    </div>
-</div>
-<ul>
-    @foreach(var item in Model){
-    <li>@Html.DisplayFor(modelItem => item.Nombre)</li>
-    }
-</ul>
-
-@section Scripts {
-    <script src="~/js/editModal.js"></script>
-} *@
 
 @model IEnumerable<ProyetoInmobiliaria.Models.Propietario>
 
@@ -32,17 +5,20 @@
     ViewData["Title"] = "Propietarios";
 }
 
-<h1>Propietarios</h1>
-
+<h2 class="h2-propietario-background">Gestión de Propietarios</h2>
 <p>
-    <a href="Propietario/Editar">Crear</a>
+<p>
+    @Html.ActionLink("Crear Propietario", "Crear", "Propietario", null, new { @class = "btn btn-agregar" })
+
 </p>
-<table class="table">
-    <thead>
+
+</p>
+<table class="table table-even-columns table-striped table-hover table-bordered">
+    <thead class="table-dark">
         <tr>
-			<th>
-				@Html.DisplayNameFor(model => model.IdPropietario)
-			</th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdPropietario)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Nombre)
             </th>
@@ -58,34 +34,46 @@
             <th>
                 @Html.DisplayNameFor(model => model.Correo)
             </th>
-            <th></th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdPropietario)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Apellido)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Dni)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telefono)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Correo)
-            </td>
-			<td>
-                @Html.ActionLink("Editar", "Editar", "Propietario", new { id= item.IdPropietario })
-			</td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdPropietario)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Apellido)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Dni)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telefono)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Correo)
+                </td>
+                <td>
+                <a href="@Url.Action("Editar", new { id = item.IdPropietario })" class="btn btn-editar">Editar</a>
+                    <a href="#" class="btn btn-eliminar" data-id="@item.IdPropietario">Eliminar</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+<div class="container mt-4 text-center">
+    <div class="image-container mt-5">
+        <img src="~/img/5.1.jpg" class="centered-image" alt="" />
+        <div class="image-caption mt-3">
+            <h5>Agentes Inmobiliarios</h5>
+            <p>Su futuro esta bien cuidado</p>
+        </div>
+    </div>
+</div>

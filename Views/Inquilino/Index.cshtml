@@ -1,10 +1,42 @@
+@model IEnumerable<ProyetoInmobiliaria.Models.Inquilino>
+
 @{
-    ViewData["Title"] = "Inquilino";
+    ViewData["Title"] = "Inquilinos";
 }
 
 <h2 class="h2-inquilino-background">Gestión de Inquilinos</h2>
+<p>
+    <a href="@Url.Action("Crear", "Inquilino")" class="btn btn-agregar">Crear Inquilino</a>
+</p>
 
-@await Html.PartialAsync("TablaModal")
-@section Scripts {
-    <script src="~/js/editModal.js"></script>
-}
+<table class="table table-even-columns">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.First().Dni)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Apellido)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Nombre)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Telefono)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Correo)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Dni)</td>
+                <td>@Html.DisplayFor(modelItem => item.Apellido)</td>
+                <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
+                <td>@Html.DisplayFor(modelItem => item.Telefono)</td>
+                <td>@Html.DisplayFor(modelItem => item.Correo)</td>
+                <td>
+                    <a href="@Url.Action("Editar", "Inquilino", new { id = item.IdInquilino })" class="btn btn-editar">Editar</a>
+                    <form asp-action="Borrar" method="post" style="display:inline;">
+                        <input type="hidden" name="id" value="@item.IdInquilino" />
+                        <input type="submit" value="Eliminar" class="btn btn-eliminar" />
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
