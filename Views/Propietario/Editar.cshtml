@@ -6,10 +6,10 @@
 
 <h1 class="h1-editar-background">Editar Propietario</h2>
 
-<div class="container">
-    <div class="row">
+<div class="container-formulario">
+    <div class="row justify-content-center">
         <div class="col-md-8">
-            <form asp-action="Guardar">
+            <form asp-action="Guardar" class="formulario-formulario">
                 <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
                 <input type="hidden" name="IdPropietario" value="@Model.IdPropietario" />
                 <div class="form-group mb-3">
@@ -37,7 +37,7 @@
                     <input asp-for="Correo" class="form-control" />
                     <span asp-validation-for="Correo" class="text-danger"></span>
                 </div>
-                <div class="form-group">
+                <div class="form-group text-center">
                     <input type="submit" value="Guardar" class="btn btn-primary" />
                 </div>
             </form>

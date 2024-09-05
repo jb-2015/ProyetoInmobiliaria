@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<Inmueble>
+@{
     ViewData["Title"] = "Inmobiliaria Sam's";
 }
 
@@ -32,5 +33,19 @@
             <span class="visually-hidden">Next</span>
         </button>
     </div>
+</div>
+<div class="containerInmueble">
+    @foreach(var item in Model){
+
+        <a href="@Url.Action("Detalles","Inmueble", new { id = item.IdInmueble})">
+            <div class="cardInmueble">
+                <img src="@item.UrlImagen" alt="">
+                <h2>@item.IdTipo.Observacion</h2>
+
+                <p>@item.Descripcion</p>
+            </div>
+        </a>
+        
+    }
 </div>
 

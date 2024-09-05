@@ -1,0 +1,37 @@
+@model Inmueble
+
+@{
+    ViewData["Title"] = "Detalles";
+}
+
+<div class="containerDetalle">
+    <div class="columna">
+        <div class="visorImagen">
+            <img src="@Model.UrlImagen" alt="Imagen del inmueble">
+        </div>
+        <div class="visorDetalles">
+            <h2>@Model.Descripcion</h2>
+            <label for="">Cantidad de ambientes</label>
+            <h3>@Model.CantidadAmbientes</h3>
+            <label for="">Metros cuadrados</label>
+            <h3>@Model.Metros2</h3>
+            <label for="">Cantidad de habitaciones</label>
+            <h3>@Model.CantidadAmbientes</h3>
+            @if (Model.Cochera)
+            {
+                <h4>Cochera</h4>
+            }
+            @if (Model.Piscina)
+            {
+                <h4>Piscina</h4>
+            }
+            @if (Model.Mascotas)
+            {
+                <h4>Se aceptan mascotas</h4>
+            }
+        </div>
+    </div>
+    <div class="colum">
+        <h2>Propietario: <a href="@Url.Action("filtrar","Propietario", new {id = Model.IdPropietario})">@Model.IdPropietario.Nombre @Model.IdPropietario.Apellido</a></h2>
+    </div>
+</div>

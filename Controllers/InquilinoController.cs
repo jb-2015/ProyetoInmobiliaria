@@ -1,5 +1,7 @@
+
 using Microsoft.AspNetCore.Mvc;
 using ProyetoInmobiliaria.Models;
+
 public class InquilinoController : Controller{
     private readonly ILogger<InquilinoController> _logger;
     private RepositorioInquilino repo;
@@ -28,6 +30,7 @@ public class InquilinoController : Controller{
     [HttpPost]
     public IActionResult Guardar(int Id, Inquilino inquilino){
         Id = inquilino.IdInquilino;
+        inquilino.Estado= true;
         if(Id == 0){
             repo.Crear(inquilino);
         }else{

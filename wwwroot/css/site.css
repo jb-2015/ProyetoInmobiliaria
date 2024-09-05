@@ -41,7 +41,7 @@ body {
 
 /* INQUILINO - PROPIETARIO  */
 
-/* Estilo general para la tabla */
+/*  tabla gral */
 .table {
   border-collapse: separate;
   border-spacing: 0 0.5rem;
@@ -63,7 +63,7 @@ body {
   color: white;
 }
 
-/* Ajustes para columnas con distribución uniforme */
+/* Ajustes columnas con distribucion uniforme */
 .table-even-columns th, .table-even-columns td {
   width: 14%;
   text-align: center;
@@ -74,7 +74,7 @@ body {
   width: 16%;
   vertical-align: middle;
 }
-/* Estilo para el botón Agregar */
+/* button Agregar */
 .btn-agregar {
   background-color: #95a495d6;
   border-color: #484e48;
@@ -90,8 +90,8 @@ body {
   border-color: #e9f26bad;
 }
 
-/* Estilos para el botón Editar */
-.btn-editar {
+/* button Editar */
+.btn-editar  {
   background-color: #f5d38bab;
   border-color: #919260;
   color: white;
@@ -109,7 +109,7 @@ body {
   border-color: #269abc;
 }
 
-/* Estilos para el botón Eliminar */
+/* button Eliminar */
 .btn-eliminar {
   background-color: #a89f9ed1;
   border-color: #978383d4;
@@ -128,10 +128,23 @@ body {
   background-color: #bbe9f0bb;
   border-color: #978383d4;
 }
+/* button guardar */
+
+.btn-primary{
+  background-color: #a89f9ed1;
+  border-color: #978383d4;
+  color: white;
+  border-radius: 10px;
+  width: 500px;
+  padding: 5px;
+}
 
 .h1-editar-background, .h1-crear-background{
 text-align: center;
-font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+background-color: #E8D1DD;
+color: #354367;
+
 }
 
 .h2-inquilino-background, .h2-propietario-background {
@@ -171,4 +184,59 @@ font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
 .image-caption p {
   color: #1A5653;
   font-size: 1rem;
+}
+.container-formulario {
+  margin-top: 50px;
+}
+.formulario-formulario{
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+
+/*ESTILOS PARA LOS INMUEBLES*/
+.cardInmueble {
+  border:1px solid gray;
+  border-radius: 15px;
+  overflow: hidden;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  box-shadow: 3px 5px 8px gray;
+}
+.containerInmueble {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: inherit;
+  height: fit-content;
+  margin-top: 50px;
+  gap: 20px;
+}
+.cardInmueble>img{
+  width: 250px;
+}
+.cardInmueble:hover{
+  box-shadow: 3px,5px,12px black;
+}
+
+/*ESTILOS DETALLES*/
+.containerDetalle{
+  display: flex;
+  flex-direction: row;
+
+}
+.visorImagen {
+  width: 500px;
+  overflow: hidden;
+}
+.visorImagen>img{
+  width: inherit;
+}
+.columna{
+  width: 50%;
+  overflow: hidden;
 }

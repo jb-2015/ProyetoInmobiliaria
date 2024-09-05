@@ -6,12 +6,11 @@
 
 <h1 class="h1-editar-background">Editar Inquilino</h1>
 
-<div class="container">
-    <div class="row">
+<div class="container-formulario">
+    <div class="row justify-content-center">
         <div class="col-md-8">
-            <form asp-action="Editar" method="post">
+            <form asp-action="Guardar" class="formulario-formulario" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
-                
                 <!-- Campo oculto para ID -->
                 <input type="hidden" asp-for="IdInquilino" />
                 
@@ -44,8 +43,7 @@
                     <input asp-for="Correo" class="form-control" />
                     <span asp-validation-for="Correo" class="text-danger"></span>
                 </div>
-                
-                <div class="form-group">
+                <div class="form-group text-center">
                     <input type="submit" value="Guardar" class="btn btn-primary" />
                 </div>
             </form>
