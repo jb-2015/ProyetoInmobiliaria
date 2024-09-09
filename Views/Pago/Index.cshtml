@@ -1,4 +1,4 @@
-@model List<Pago>
+@model PagoViewModel
 @{
     ViewData["Title"] = "Pagos";
 }
@@ -6,25 +6,28 @@
 <table class="table table-even-columns table-striped table-hover table-bordered">
     <thead class="table-dark">
         <tr>
-            <th>@Html.DisplayNameFor(model => model.First().IdContrato)</th>
-            <th>@Html.DisplayNameFor(model => model.First().FechaPago)</th>
-            <th>@Html.DisplayNameFor(model => model.First().Importe)</th>
-            <th>@Html.DisplayNameFor(model => model.First().NumeroPago)</th>
-            <th>@Html.DisplayNameFor(model => model.First().Detalle)</th>
+            <th>@Html.DisplayNameFor(model => model.pagos.First().IdContrato)</th>
+            <th>@Html.DisplayNameFor(model => model.pagos.First().FechaPago)</th>
+            <th>@Html.DisplayNameFor(model => model.pagos.First().Importe)</th>
+            <th>@Html.DisplayNameFor(model => model.pagos.First().NumeroPago)</th>
+            <th>@Html.DisplayNameFor(model => model.pagos.First().Detalle)</th>
         </tr>
     </thead>
     <tbody class="table">
-        @foreach (var item in Model){
-            <tr>
-                <td>@item.IdContrato</td>
-                <td>@item.FechaPago</td>
-                <td>@item.Importe</td>
-                <td>@item.NumeroPago</td>
-                <td>@item.Detalle</td>
-            </tr>
+        @if(Model.pagos != null){
+            @foreach (var item in Model.pagos){
+                <tr>
+                    <td>@item.IdContrato</td>
+                    <td>@item.FechaPago</td>
+                    <td>@item.Importe</td>
+                    <td>@item.NumeroPago</td>
+                    <td>@item.Detalle</td>
+                </tr>
+            }
         }
     </tbody>
 </table>
+<a href="/Pago/Crear/@Model.IdContrato">NUEVO PAGO</a>
 @*<h2>Pagos del contrato x</h2>
 ACA IRIA UN FOREACH RECORRIENDO LOS PAGOS DE X CONTRATO Y
 POR CADA PAGO UNA CARD DE ESTAS: 

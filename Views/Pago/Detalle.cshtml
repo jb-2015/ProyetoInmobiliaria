@@ -1,12 +1,8 @@
+@model Pago
 <h2>Pagos realizados por el contrato</h2>
 <table class="table table-even-columns table-striped table-hover table-bordered">
     <thead class="table-dark">
         <tr>
-            @* <th>@modelItem.IdContrato</th>
-            <th>@modelItem.FechaPago</th>
-            <th>$@modelItem.Importe</th>
-            <th>@modelItem.NumeroPago</th>
-            <th>@modelItem.Detalle</th> *@
             <th>Contrato</th>
             <th>Fecha de pago</th>
             <th>Importe</th>
@@ -15,12 +11,12 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <th>Contrato N° 1</th>
-            <th>12/10/23</th>
-            <th>$5000.00</th>
-            <th>15432</th>
-            <th>Pago numero 3</th>
-        </tr>
+            <tr>
+                <th>@Model.IdContrato</th>
+                <th>@Model.FechaPago</th>
+                <th>$@Model.Importe</th>
+                <th>@Model.NumeroPago</th>
+                <th>@Model.Detalle</th>
+            </tr>
     </tbody>
 </table>

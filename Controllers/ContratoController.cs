@@ -33,25 +33,24 @@ public class ContratoController : Controller
         return View(contratos);
     }
 
-    public IActionResult Crear()
-    {
-       /* RepositorioInmueble _repoInmueble= new RepositorioInmueble();
-        RepositorioInquilino _repoInquilino = new RepositorioInquilino();
-        Contrato contrato = new Contrato();
+    // public IActionResult Crear()
+    // {
+    //    /* RepositorioInmueble _repoInmueble= new RepositorioInmueble();
+    //     RepositorioInquilino _repoInquilino = new RepositorioInquilino();
+    //     Contrato contrato = new Contrato();
 
-        List<Inquilino> inquilinos = _repoInquilino.Listar();
-        List<Inmueble> inmuebles = _repoInmueble.Listar();
-        ContratoViewModel cvm = new ContratoViewModel {
-            Inquilinos = inquilinos,
-            Inmuebles = inmuebles,
-            Contrato = new Contrato(),
-            Inmueble = new  Inmueble(),
-            Inquilino = new Inquilino()
-        };
-        return View(cvm);*/
-        return View();
-    }
-    [HttpGet]
+    //     List<Inquilino> inquilinos = _repoInquilino.Listar();
+    //     List<Inmueble> inmuebles = _repoInmueble.Listar();
+    //     ContratoViewModel cvm = new ContratoViewModel {
+    //         Inquilinos = inquilinos,
+    //         Inmuebles = inmuebles,
+    //         Contrato = new Contrato(),
+    //         Inmueble = new  Inmueble(),
+    //         Inquilino = new Inquilino()
+    //     };
+    //     return View(cvm);*/
+    //     return View();
+    // }
     public IActionResult Crear(int id_i){
         
         RepositorioInmueble _repoInmueble= new RepositorioInmueble();
@@ -74,42 +73,24 @@ public class ContratoController : Controller
     }
 
     [HttpPost]
-    public IActionResult Guardar(Contrato contrato)
-    {
-        RepositorioContrato _repoContrato = new RepositorioContrato();
-
-        List<Contrato> contratos = _repoContrato.ObtenerPorInmueble2(contrato.IdInmueble);
-
-        foreach(var c in contratos){
-            if((c.FechaInicio>=contrato.FechaInicio && (c.FechaInicio<=contrato.FechaFin||c.FechaInicio<=contrato.FechaAnulacion))||(c.FechaFin>=contrato.FechaInicio && (c.FechaFin<=contrato.FechaFin||c.FechaFin<=contrato.FechaAnulacion))){
-                ModelState.AddModelError("", "Las fechas del nuevo contrato se solapan con un contrato existente.");
-                return View("Crear");
-            }
-        }
-
-        if (ModelState.IsValid)
-        {
-            try
-            {
-                if (contrato.IdContrato == 0)
-                {
-                    _repo.Crear(contrato);
-                    _logger.LogInformation("Se ha creado un nuevo contrato", contrato.IdContrato);
+    public IActionResult Guardar(ContratoViewModel cvm){
+        try{
+            if(cvm.Contrato.IdContrato == 0){
+                int idCreado = _repo.Crear(cvm.Contrato);
+                if(idCreado > 0){
+                    _logger.LogInformation("Se ha creado un nuevo contrato: ", cvm.Contrato.IdContrato);
                 }
-                else
-                {
-                    _repo.Modificar(contrato);
-                    _logger.LogInformation("Se ha modificado el contrato con id: {Id}", contrato.IdContrato);
-                }
-                return RedirectToAction("Index");
+                // _logger.LogInformation("Se ha creado un nuevo contrato", cvm.Contrato.IdContrato);
+            }else{
+                _repo.Modificar(cvm.Contrato);
+                _logger.LogInformation("Se ha modificado el contrato con id: {Id}", cvm.Contrato.IdContrato);
             }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Ha ocurrido un error al tratar de guardar el contrato", contrato.IdContrato);
-                ModelState.AddModelError("",  "Oops ha ocurrido un error al intentar guardar el inmueble"); // muetsro model de aviso
-            }
+            return RedirectToAction("Index");
+        }catch (Exception ex){
+            _logger.LogError(ex, "Ha ocurrido un error al tratar de guardar el contrato", cvm.Contrato.IdContrato);
+            ModelState.AddModelError("",  "Oops ha ocurrido un error al intentar guardar el inmueble"); // muetsro model de aviso
         }
-        return View("Crear", contrato);
+        return RedirectToAction("Index", "Home");
     }
 
     [HttpPost]

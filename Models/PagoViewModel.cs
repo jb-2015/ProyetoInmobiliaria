@@ -1,5 +1,4 @@
-using ProyetoInmobiliaria.Models;
 public class PagoViewModel{
-    public Pago Pago {get;set;}
-    public List<Contrato>Contratos{get;set;}
+    public int IdContrato {get; set;}
+    public List<Pago>pagos{get;set;} = new List<Pago>();
 }

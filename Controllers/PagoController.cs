@@ -3,12 +3,14 @@ using ProyetoInmobiliaria.Models;
 public class PagoController:Controller{
     private RepositorioPago repo = new RepositorioPago();
     private RepositorioContrato repoContrato = new RepositorioContrato();
-    public IActionResult Index(){
-        var pago = repo.Listar();
-        if(pago == null){
-            pago = new List<Pago>();
-        }
-        return View(pago);
+    public IActionResult Index(int id){
+        var pagos = repo.ListarPorContrato(id);
+        if(pagos == null){pagos = new List<Pago>();}
+        PagoViewModel pvm = new PagoViewModel{
+            pagos = pagos,
+            IdContrato = id
+        };
+        return View(pvm);
     }
     public IActionResult Detalle(int id){
         var pago = repo.Obtener(id);
@@ -17,12 +19,16 @@ public class PagoController:Controller{
         }
         return View(pago);
     }
-    public IActionResult Crear(){
-        PagoViewModel pvm = new PagoViewModel{
-            Contratos = repoContrato.Listar(),
-            Pago = new Pago()
-        };
-        return View(pvm);
+    public IActionResult Crear(int idContrato){
+        // var contrato = repoContrato.Obtener(idContrato);
+        // if(contrato != null){
+            Pago p = new Pago{
+                IdContrato = idContrato
+            };
+            return View(p);
+        // }else{
+        //     return RedirectToAction("Index");
+        // }
     }
     public IActionResult Editar(int id){
         var pago = repo.Obtener(id);

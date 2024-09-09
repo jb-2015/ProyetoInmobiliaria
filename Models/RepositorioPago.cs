@@ -58,7 +58,7 @@ public class RepositorioPago:RepositorioBase{
         return pagos;
     }
     public List<Pago> ListarPorContrato(int IdContrato){
-        List<Pago> pagos = null;
+        List<Pago>? pagos = null;
         using(MySqlConnection connection = new MySqlConnection(ConnectionString)){
             connection.Open();
             string query = "SELECT * FROM pago WHERE idContrato = @IdContrato";

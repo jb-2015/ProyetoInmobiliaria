@@ -38,6 +38,7 @@
         @if(Model.Contrato != null)
         {
             <p>Desde @Model.Contrato.FechaInicio Hasta  @Model.Contrato.FechaFin</p>
+            <a href="/Pago/Index/@Model.Contrato.IdContrato">Pagos realizados</a>
         }
         else
         {
