@@ -1,17 +1,19 @@
 @model List<Inmueble>
 
 @{
-    ViewData["title"]="Administrar Inmueble";
+    ViewData["title"]="Inmueble";
+    
 }
 
-<h2>Administrar Inmueble</h2>
+<h2 class="h2-tipos-background">Administrar Inmuebles</h2>
 <p>
-    <a href="@Url.Action("Crear","Inmueble")" class="btn btn-agregar">CREAR</a>
+    <a href="@Url.Action("Crear", "Inmueble")" class="btn btn-agregar">NUEVO</a>
 </p>
+
 <table class="table table-even-columns table-striped table-hover table-bordered">
     <thead class="table-dark">
         <tr>
-            <th>@Html.DisplayNameFor(model => model.First().IdTipo.Observacion)</th>
+            <th>@Html.DisplayNameFor(model => model.First().tipo)</th>
             <th>@Html.DisplayNameFor(model => model.First().CantidadAmbientes)</th>
             <th>@Html.DisplayNameFor(model => model.First().Precio)</th>
             <th>@Html.DisplayNameFor(model => model.First().Cochera)</th>
@@ -24,7 +26,7 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@Html.DisplayFor(modelItem => item.IdTipo.Observacion)</td>
+                <td>@Html.DisplayFor(modelItem => item.tipo.Observacion)</td>
                 <td>@Html.DisplayFor(modelItem => item.CantidadAmbientes)</td>
                 <td>@Html.DisplayFor(modelItem => item.Precio)</td>
                 <td>@Html.DisplayFor(modelItem => item.Cochera)</td>
@@ -41,7 +43,3 @@
         }
     </tbody>
 </table>
-
-
-
-

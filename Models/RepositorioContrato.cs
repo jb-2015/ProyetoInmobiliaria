@@ -34,8 +34,8 @@ public class RepositorioContrato: RepositorioBase{
         int filasAfectadas = -1;
         using(MySqlConnection connection = new MySqlConnection(ConnectionString)){
             connection.Open();
-            string query = "UPDATE Contrato SET(idInquilino=@IdInquilino, idInmueble=@IdInmueble, monto=@Monto"+
-            ", fechaInicio=@FechaInicio, fechaFin=@FechaFin, fechaAnulacion=@FechaAnulacion)"+
+            string query = "UPDATE Contrato SET idInquilino=@IdInquilino, idInmueble=@IdInmueble, monto=@Monto"+
+            ", fechaInicio=@FechaInicio, fechaFin=@FechaFin, fechaAnulacion=@FechaAnulacion "+
             "WHERE idContrato = @IdContrato";
             using(MySqlCommand command = new MySqlCommand(query, connection)){
                 command.Parameters.AddWithValue("@IdInquilino", contrato.IdInquilino);
@@ -118,6 +118,61 @@ public class RepositorioContrato: RepositorioBase{
         }
         return filasAfectadas;
     }    
+
+    public List<Contrato> ObtenerPorInmueble2(int id){
+        Contrato contrato = null;
+        List<Contrato> contratos = new List<Contrato>();
+        using(MySqlConnection connection = new MySqlConnection(ConnectionString)){
+            connection.Open();
+            string query = "SELECT * FROM Contrato WHERE idInmueble = @IdInmueble";
+            using(MySqlCommand command = new MySqlCommand(query, connection)){
+                command.Parameters.AddWithValue("@IdInmueble", id);
+                using(MySqlDataReader reader = command.ExecuteReader()){
+                    if(reader.Read()){
+                        Inquilino inquilino = repoInquilino.Obtener(reader.GetInt32("IdInquilino"));
+                        Inmueble inmueble = repoInmueble.Obtener(reader.GetInt32("IdInmueble"));
+                        contrato = new Contrato{
+                            IdContrato = reader.GetInt32("idContrato"),
+                            Monto = reader.GetDouble("monto"),
+                            FechaInicio = reader.GetDateTime("fechaInicio"),
+                            FechaFin = reader.GetDateTime("fechaFin"),
+                            FechaAnulacion = reader.GetDateTime("fechaAnulacion"),
+                            Estado = reader.GetBoolean("estado")
+                            };
+                            contratos.Add(contrato);
+                    }
+                }
+            }
+        }
+        return contratos;
+    }
+    public Contrato ObtenerPorInmueble(int id){
+        Contrato contrato = null;
+        
+        using(MySqlConnection connection = new MySqlConnection(ConnectionString)){
+            connection.Open();
+            string query = "SELECT * FROM Contrato WHERE idInmueble = @IdInmueble";
+            using(MySqlCommand command = new MySqlCommand(query, connection)){
+                command.Parameters.AddWithValue("@IdInmueble", id);
+                using(MySqlDataReader reader = command.ExecuteReader()){
+                    if(reader.Read()){
+                        Inquilino inquilino = repoInquilino.Obtener(reader.GetInt32("IdInquilino"));
+                        Inmueble inmueble = repoInmueble.Obtener(reader.GetInt32("IdInmueble"));
+                        contrato = new Contrato{
+                            IdContrato = reader.GetInt32("idContrato"),
+                            Monto = reader.GetDouble("monto"),
+                            FechaInicio = reader.GetDateTime("fechaInicio"),
+                            FechaFin = reader.GetDateTime("fechaFin"),
+                            FechaAnulacion = reader.GetDateTime("fechaAnulacion"),
+                            Estado = reader.GetBoolean("estado")
+                            };
+                           
+                    }
+                }
+            }
+        }
+        return contrato;
+    }
 }
 // using ProyetoInmobiliaria.Models;
 // public class RepositorioContrato{

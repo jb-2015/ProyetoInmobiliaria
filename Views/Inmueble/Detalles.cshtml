@@ -1,4 +1,4 @@
-@model Inmueble
+@model ContratoViewModel
 
 @{
     ViewData["Title"] = "Detalles";
@@ -7,31 +7,45 @@
 <div class="containerDetalle">
     <div class="columna">
         <div class="visorImagen">
-            <img src="@Model.UrlImagen" alt="Imagen del inmueble">
+            <img src="@Model.Inmueble.UrlImagen" alt="Imagen del inmueble">
         </div>
         <div class="visorDetalles">
-            <h2>@Model.Descripcion</h2>
+            <h2>@Model.Inmueble.Descripcion</h2>
             <label for="">Cantidad de ambientes</label>
-            <h3>@Model.CantidadAmbientes</h3>
+            <h3>@Model.Inmueble.CantidadAmbientes</h3>
             <label for="">Metros cuadrados</label>
-            <h3>@Model.Metros2</h3>
+            <h3>@Model.Inmueble.Metros2</h3>
             <label for="">Cantidad de habitaciones</label>
-            <h3>@Model.CantidadAmbientes</h3>
-            @if (Model.Cochera)
+            <h3>@Model.Inmueble.CantidadAmbientes</h3>
+            @if (Model.Inmueble.Cochera)
             {
                 <h4>Cochera</h4>
             }
-            @if (Model.Piscina)
+            @if (Model.Inmueble.Piscina)
             {
                 <h4>Piscina</h4>
             }
-            @if (Model.Mascotas)
+            @if (Model.Inmueble.Mascotas)
             {
                 <h4>Se aceptan mascotas</h4>
             }
         </div>
     </div>
-    <div class="colum">
-        <h2>Propietario: <a href="@Url.Action("filtrar","Propietario", new {id = Model.IdPropietario})">@Model.IdPropietario.Nombre @Model.IdPropietario.Apellido</a></h2>
+    <div class="columna">
+        <h2>Propietario: <a href="@Url.Action("filtrar","Propietario", new {id = Model.Inmueble.propietario})">@Model.Inmueble.propietario.Nombre @Model.Inmueble.propietario.Apellido</a></h2>
+       
+        <h2>Contrato vigente</h2>
+        @if(Model.Contrato != null)
+        {
+            
+            <p>Desde @Model.Contrato.FechaInicio Hasta  @Model.Contrato.FechaFin</p>
+            <a href="/Pago/Index/@Model.Contrato.IdContrato">Pagos realizados</a>
+        }
+        else
+        {
+            <p>No existen contratos para este inmueble</p>
+            <a href="@Url.Action("Crear","Contrato", new { id_i = Model.Inmueble.IdInmueble})" > Crear uno</a>
+        }
+        
     </div>
 </div>

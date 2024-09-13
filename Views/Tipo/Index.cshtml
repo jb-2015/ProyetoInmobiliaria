@@ -1,0 +1,44 @@
+@model List<Tipo>
+@{
+    ViewData["Title"] = "Tipos";
+}
+
+<body class="tipos">
+    
+
+<div class="container-centered">
+    <div class="logo">
+        <img src="~/img/11.png" alt="Logo" />
+    </div>
+
+    <h2 class="h2-tipos-background">Tipo de Inmueble</h2>
+
+    <table class="table tabla-tipos">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.First().Observacion)</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Observacion</td>
+                    <td>
+                        <a href="@Url.Action("Editar", "Tipo", new { id = item.IdTipo })" class="btn btn-editar">Editar</a>
+                        <form asp-action="Borrar" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@item.IdTipo" />
+                            <input type="submit" value="Eliminar" class="btn btn-eliminar" />
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <p>
+        <a href="@Url.Action("Crear", "Tipo")" class="btn btn-agregar">Crear Tipo</a>
+    </p>
+    <br>
+</div>
+</body>

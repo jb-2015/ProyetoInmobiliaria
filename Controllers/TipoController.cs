@@ -41,24 +41,18 @@ public class TipoController: Controller{
     [HttpPost]
     public IActionResult Guardar(Tipo tipo)
     {
-        if (ModelState.IsValid)
-        {
-            try
-            {
-                if (tipo.IdTipo == 0)
-                {
+        if (ModelState.IsValid){
+            try{
+                if (tipo.IdTipo == 0){
                     _repo.Crear(tipo);
                     _logger.LogInformation("Se ha creado un nuevo tipo con id: {Id}", tipo.IdTipo);
-                }
-                else
-                {
+                }else{
                     _repo.Modificar(tipo);
                     _logger.LogInformation("Se ha modificado el tipo con id: {Id}", tipo.IdTipo);
                 }
                 return RedirectToAction("Index");
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex){
                 _logger.LogError(ex, "Ha ocurrido un error al tratar de guardar el tipo con id: {Id}", tipo.IdTipo);
                 ModelState.AddModelError("", "Oops ha ocurrido un error al intentar guardar el tipo");
             }
@@ -81,5 +75,15 @@ public class TipoController: Controller{
             return RedirectToAction("Index");
         }
     }
-
+    public IActionResult Editar(int Id){
+        try{
+            if(Id == 0){
+                return View();
+            }else{
+                return View(_repo.Obtener(Id));
+            }
+        }catch(Exception e){
+            return RedirectToAction("Index");
+        }
+    }
 }

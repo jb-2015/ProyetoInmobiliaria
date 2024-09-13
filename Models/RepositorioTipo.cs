@@ -23,9 +23,10 @@ public class RepositorioTipo:RepositorioBase{
         int filasAfectadas = -1;
         using(MySqlConnection connection = new MySqlConnection(ConnectionString)){
             connection.Open();
-            string query = "UPDATE Tipo SET(observacion=@Observacion)WHERE idTipo = @IdTipo";
+            string query = "UPDATE tipo SET observacion=@Observacion WHERE idTipo = @IdTipo";
             using(MySqlCommand command = new MySqlCommand(query, connection)){
                 command.Parameters.AddWithValue("@Observacion", tipo.Observacion);
+                command.Parameters.AddWithValue("@IdTipo", tipo.IdTipo);
                 filasAfectadas = command.ExecuteNonQuery();
             }
         }

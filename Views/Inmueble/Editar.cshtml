@@ -1,78 +1,80 @@
 @model InmuebleViewModel
 
 @{
-    ViewData["title"]="Crear Inmueble";
-    ViewData["BodyClass"] = "crear-inmueble-bg";
+    ViewData["title"]="Editar Inmueble";
 }
 
-<h2 class="h2-tipos-background">Nuevo Inmueble</h2>
+<h1>@Model.Inmueble.tipo.Observacion</h1>  
 
-<div class="container-formulario crear-inmueble">
-    <div class="row justify-content-center">
-        <form asp-action="Guardar" class="formulario-formulario"method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
-                <input type="hidden" asp-for="Inmueble.IdInmueble" value="0">
-                <div class="form-group mb-3">
-                    <label asp-for="Inmueble.UrlImagen "class="form-label">URL Imagen</label>
+<div class="containerH">
+    <div class="colu1">
+        <div class="containerV">
+            <img src="@Model.Inmueble.UrlImagen" alt="" class="img-m">
+            <form asp-action="Guardar" method="post">
+                <input type="hidden" asp-for="Inmueble.IdInmueble" value="@Model.Inmueble.IdInmueble">
+                <div class="form-group">
+                    <label asp-for="Inmueble.UrlImagen">URL Imagen</label>
                     <input type="text" asp-for="Inmueble.UrlImagen" class="form-control">
                 </div>
-                <div class="form-group mb-3">
-                    <label asp-for="Inmueble.CantidadAmbientes" class="form-label">Cantidad Ambientes</label>
+                <div class="form-group">
+                    <label asp-for="Inmueble.CantidadAmbientes">Cantidad Ambientes</label>
                     <input type="text" asp-for="Inmueble.CantidadAmbientes" class="form-control">
                 </div>
-                <div class="form-group mb-3">
-                    <label asp-for="Inmueble.Metros2" class="form-label">M2</label>
+                <div class="form-group">
+                    <label asp-for="Inmueble.Metros2">M2</label>
                     <input type="text" asp-for="Inmueble.Metros2" class="form-control">
                 </div>
-                <div class="form-group mb-3">
-                    <label asp-for="Inmueble.Precio" class="form-label">Precio</label>
+                <div class="form-group">
+                    <label asp-for="Inmueble.Precio">Precio</label>
                     <input type="text" asp-for="Inmueble.Precio" class="form-control">
                 </div>
-                <div class="form-group mb-3">
+                <div class="form-group">
                     <label class="CheckCochera">
                         <input class="form-check-input" asp-for="Inmueble.Cochera" type="checkbox"> Cochera
                     </label>
                 </div>
-                <div class="form-group mb-3">
+                <div class="form-group">
                     <label class="CheckPiscina">
                         <input class="form-check-input" asp-for="Inmueble.Piscina" type="checkbox"> Piscina
                     </label>
                 </div>
-                <div class="form-group mb-3">
+                <div class="form-group">
                     <label class="CheckMascotas">
                         <input class="form-check-input" asp-for="Inmueble.Mascotas" type="checkbox"> Mascotas
                     </label>
                 </div>
-                <div class="form-group mb-3">
-                    <label asp-for="Inmueble.IdTipo" class="form-label">Tipo</label>
+                <div class="form-group">
+                    <label asp-for="Inmueble.IdTipo">Tipo</label>
                     <select asp-for="Inmueble.IdTipo" asp-items="@(new SelectList(Model.Tipos, "IdTipo", "Observacion"))" class="form-control">
                     </select>
                 </div>
-                <div class="form-group mb-3">
-                    <label asp-for="Inmueble.IdDireccion" class="form-label">Direccion</label>
+                <div class="form-group">
+                    <label asp-for="Inmueble.IdDireccion">Direccion</label>
                     <select asp-for="Inmueble.IdDireccion" asp-items="@(new SelectList(Model.Direcciones, "IdDireccion", "DireccionCompleta"))" class="form-control">
                     </select>
                 </div>
                 
-                <div class="form-group mb-3">
-                    <label asp-for="Inmueble.IdPropietario" class="form-label">Propietarios</label>
+                <div class="form-group">
+                    <label asp-for="Inmueble.IdPropietario">Propietarios</label>
                     <select asp-for="Inmueble.IdPropietario" asp-items="@(new SelectList(Model.Propietarios, "IdPropietario", "NombreYApellido"))" class="form-control">
                     </select>
                 </div>
                 
-                <div class="form-group mb-3">
+                <div class="form-group">
                     <label class="CheckDisponible">
                         <input class="form-check-input" asp-for="Inmueble.Disponible" type="checkbox"> Disponible
                     </label>
                 </div>
-                <div class="form-group mb-3">
+                <div class="form-group">
                     <textarea asp-for="Inmueble.Descripcion" class="form-control" placeholder="Ingrese una descripcion...">@Model.Inmueble.Descripcion</textarea>
                 </div>
-                <div class="form-group text-center">
-                    <input type="submit" value="Guardar" class="btn btn-primary" />
-                </div>
+                <button type="submit" class="btn btn-primary">Guardar</button>
             </form>
-    </div>  
+
+            
+        </div>
+    </div>
+    <div class="colu2">
+        
+    </div>
 </div>
-
-

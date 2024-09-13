@@ -29,7 +29,7 @@ public class RepositorioDireccion:RepositorioBase{
         int filasAfectadas = -1;
         using(MySqlConnection connection = new MySqlConnection(ConnectionString)){
             connection.Open();
-            string query = "UPDATE Direccion SET(calle=@Calle, altura=@Altura, cp=@Cp, ciudad=@Ciudad, coordenadas=@Coordenadas)"+
+            string query = "UPDATE Direccion SET calle=@Calle, altura=@Altura, cp=@Cp, ciudad=@Ciudad, coordenadas=@Coordenadas "+
             "WHERE idDireccion = @IdDireccion";
             using(MySqlCommand command = new MySqlCommand(query, connection)){
                 command.Parameters.AddWithValue("@Calle", Direccion.Calle);

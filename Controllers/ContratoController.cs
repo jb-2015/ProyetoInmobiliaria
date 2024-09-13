@@ -33,53 +33,63 @@ public class ContratoController : Controller
         return View(contratos);
     }
 
-    // public IActionResult Detalles(int id)
+    // public IActionResult Crear()
     // {
-    //     if (id == 0)
-    //     {
-    //         _logger.LogWarning("No hay detalles para ese id");
-    //         return NotFound();
-    //     }
-    //     var contrato = _repo.Obtener(id);
-    //     if (contrato == null)
-    //     {
-    //         _logger.LogWarning("Contrato no encontrado con id : {Id}", id);
-    //         return NotFound();
-    //     }
-    //     return View(contrato);
-    // }
+    //    /* RepositorioInmueble _repoInmueble= new RepositorioInmueble();
+    //     RepositorioInquilino _repoInquilino = new RepositorioInquilino();
+    //     Contrato contrato = new Contrato();
 
-    public IActionResult Crear()
-    {
-        return View();
+    //     List<Inquilino> inquilinos = _repoInquilino.Listar();
+    //     List<Inmueble> inmuebles = _repoInmueble.Listar();
+    //     ContratoViewModel cvm = new ContratoViewModel {
+    //         Inquilinos = inquilinos,
+    //         Inmuebles = inmuebles,
+    //         Contrato = new Contrato(),
+    //         Inmueble = new  Inmueble(),
+    //         Inquilino = new Inquilino()
+    //     };
+    //     return View(cvm);*/
+    //     return View();
+    // }
+    public IActionResult Crear(int id_i){
+        
+        RepositorioInmueble _repoInmueble= new RepositorioInmueble();
+        RepositorioInquilino _repoInquilino = new RepositorioInquilino();
+        Contrato contrato = new Contrato();
+
+        List<Inquilino> inquilinos = _repoInquilino.Listar() ?? new List<Inquilino>();
+        List<Inmueble> inmuebles = _repoInmueble.Listar() ?? new List<Inmueble>();
+
+        Inmueble inmueble = _repoInmueble.Obtener(id_i);
+
+        ContratoViewModel cvm = new ContratoViewModel {
+            Inquilinos = inquilinos,
+            Inmuebles = inmuebles,
+            Contrato = contrato,
+            Inmueble = inmueble,
+            Inquilino = new Inquilino()
+        };
+        return View(cvm);
     }
 
     [HttpPost]
-    public IActionResult Guardar(Contrato contrato)
-    {
-        if (ModelState.IsValid)
-        {
-            try
-            {
-                if (contrato.IdContrato == 0)
-                {
-                    _repo.Crear(contrato);
-                    _logger.LogInformation("Se ha creado un nuevo contrato", contrato.IdContrato);
+    public IActionResult Guardar(ContratoViewModel cvm){
+        try{
+            if(cvm.Contrato.IdContrato == 0){
+                int idCreado = _repo.Crear(cvm.Contrato);
+                if(idCreado > 0){
+                    _logger.LogInformation("Se ha creado un nuevo contrato: ", cvm.Contrato.IdContrato);
                 }
-                else
-                {
-                    _repo.Modificar(contrato);
-                    _logger.LogInformation("Se ha modificado el contrato con id: {Id}", contrato.IdContrato);
-                }
-                return RedirectToAction("Index");
+                // _logger.LogInformation("Se ha creado un nuevo contrato", cvm.Contrato.IdContrato);
+            }else{
+                _repo.Modificar(cvm.Contrato);
+                _logger.LogInformation("Se ha modificado el contrato con id: {Id}", cvm.Contrato.IdContrato);
             }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Ha ocurrido un error al tratar de guardar el contrato", contrato.IdContrato);
-                ModelState.AddModelError("",  "Oops ha ocurrido un error al intentar guardar el inmueble"); // muetsro model de aviso
-            }
+        }catch (Exception ex){
+            _logger.LogError(ex, "Ha ocurrido un error al tratar de guardar el contrato", cvm.Contrato.IdContrato);
+            ModelState.AddModelError("",  "Oops ha ocurrido un error al intentar guardar el inmueble"); // muetsro model de aviso
         }
-        return View("Crear", contrato);
+        return RedirectToAction("Index", "Home");
     }
 
     [HttpPost]

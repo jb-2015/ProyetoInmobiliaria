@@ -28,8 +28,8 @@ public class RepositorioPropietario:RepositorioBase{
         int filasAfectadas = -1;
         using(MySqlConnection connection = new MySqlConnection(ConnectionString)){
             connection.Open();
-            string query = "UPDATE Propietario SET(dni=@Dni, apellido=@Apellido, nombre=@Nombre, telefono=@Telefono, correo=@Correo)"+
-            "WHERE idPropietario = @IdPropietario";
+            string query = "UPDATE Propietario SET dni=@Dni, apellido=@Apellido, nombre=@Nombre, telefono=@Telefono, correo=@Correo"+
+            " WHERE idPropietario = @IdPropietario";
             using(MySqlCommand command = new MySqlCommand(query, connection)){
                 command.Parameters.AddWithValue("@Dni", propietario.Dni);
                 command.Parameters.AddWithValue("@Apellido", propietario.Apellido);
@@ -100,7 +100,7 @@ public class RepositorioPropietario:RepositorioBase{
         int filasAfectadas = -1;
         using(MySqlConnection connection = new MySqlConnection(ConnectionString)){
             connection.Open();
-            string query = "UPDATE Propietario SET(estado = false) WHERE idPropietario = @IdPropietario";
+            string query = "UPDATE Propietario SET estado = false WHERE idPropietario = @IdPropietario";
             using(MySqlCommand command = new MySqlCommand(query, connection)){
                 command.Parameters.AddWithValue("@IdPropietario", IdPropietario);
                 filasAfectadas = command.ExecuteNonQuery();
