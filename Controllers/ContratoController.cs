@@ -85,7 +85,6 @@ public class ContratoController : Controller
                 _repo.Modificar(cvm.Contrato);
                 _logger.LogInformation("Se ha modificado el contrato con id: {Id}", cvm.Contrato.IdContrato);
             }
-            return RedirectToAction("Index");
         }catch (Exception ex){
             _logger.LogError(ex, "Ha ocurrido un error al tratar de guardar el contrato", cvm.Contrato.IdContrato);
             ModelState.AddModelError("",  "Oops ha ocurrido un error al intentar guardar el inmueble"); // muetsro model de aviso

@@ -29,12 +29,19 @@
                 <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
                 <td>@Html.DisplayFor(modelItem => item.Telefono)</td>
                 <td>@Html.DisplayFor(modelItem => item.Correo)</td>
-                <td>
-                    <a href="@Url.Action("Editar", "Inquilino", new { id = item.IdInquilino })" class="btn btn-editar">Editar</a>
-                    <form asp-action="Borrar" method="post" style="display:inline;">
+                <td class="d-flex align-items-center w-auto">
+                    <a href="@Url.Action("Editar", "Inquilino", new { id = item.IdInquilino })" class="btn btn-editbt mx-1">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                    <form asp-action="Borrar" class="mx-1" method="post" style="display:inline;">
                         <input type="hidden" name="id" value="@item.IdInquilino" />
-                        <input type="submit" value="Eliminar" class="btn btn-eliminar" />
+                        <button type="submit" class="btn btn-borrarbt" title="Borrar">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
                     </form>
+                    <a class="btn btn-detallebt mx-1" href="/Inquilino/Detalle/@item.IdInquilino">
+                        <i class="fa-solid fa-list"></i>
+                    </a>
                 </td>
             </tr>
         }

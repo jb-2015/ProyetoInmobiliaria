@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Inmobiliaria.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body class="@ViewData["BodyClass"]">
     <header>
@@ -19,20 +20,36 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
+                        @* <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home"
                                 asp-action="Privacy">Privacy</a>
+                        </li> *@
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Inquilino</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/Inquilino/Crear">Crear</a></li>
+                                <li><a class="dropdown-item" href="/Inquilino/Index">Listar</a></li>
+                                <li><a class="dropdown-item" href="/Inquilino/Editar">Editar</a></li>
+                                <li><a class="dropdown-item" href="/Inquilino/Buscar">Buscar</a></li>
+                            </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Inquilino" asp-action="Index">Inquilino</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Propietario</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/Propietario/Crear">Crear</a></li>
+                                <li><a class="dropdown-item" href="/Propietario/Index">Listar</a></li>
+                                <li><a class="dropdown-item" href="/Propietario/Editar">Editar</a></li>
+                                <li><a class="dropdown-item" href="/Propietario/Buscar">Buscar</a></li>
+                            </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Propietario"
-                                asp-action="Index">Propietario</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Inmueble"
-                                asp-action="Index">Administar Inmuebles</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Inmuebles</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/Inmueble/Crear">Crear</a></li>
+                                <li><a class="dropdown-item" href="/Inmueble/Index">Listar</a></li>
+                                <li><a class="dropdown-item" href="/Inmueble/Editar">Editar</a></li>
+                                <li><a class="dropdown-item" href="/Inmueble/Buscar">Buscar</a></li>
+                            </ul>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Tipo"

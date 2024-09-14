@@ -23,11 +23,36 @@ public class PropietarioController : Controller{
         }
     }
 
-    public IActionResult Crear()
-{
-    return View(); // Devuelve la vista para crear un nuevo propietario
-}
 
+    public IActionResult Detalle(int id){
+        Propietario propietario = null;
+        try{
+            propietario = repo.Obtener(id);
+        }catch (System.Exception){
+            _logger.LogInformation("Propietario/Detalle/Error al obtener el propietario.");
+        }
+        return View(propietario);
+    }
+
+    public IActionResult Crear(){
+        return View(); // Devuelve la vista para crear un nuevo propietario
+    }
+
+    [HttpPost]
+    public IActionResult Alta(int Id){
+        Propietario p = null; 
+        try{
+            p = repo.Obtener(Id);
+            _logger.LogInformation("Propietario: "+p.NombreYApellido);            
+            _logger.LogInformation("Estado: "+p.Estado);            
+            p.Estado = true;
+            _logger.LogInformation("Estado: "+p.Estado);            
+            repo.Modificar(p);
+        }catch (System.Exception){
+            _logger.LogInformation("Propietario/Alta/ error al dar de alta al propietario");            
+        }
+        return RedirectToAction("Detalle", "Propietario", new {Id = p.IdPropietario});
+    }
 
     [HttpPost]
     public IActionResult Guardar(int Id, Propietario propietario){

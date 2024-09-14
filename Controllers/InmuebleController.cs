@@ -102,21 +102,13 @@ public class InmuebleController : Controller
     [HttpPost]
     public IActionResult Guardar(Inmueble inmueble)
     {
-        //_logger.LogInformation("Entro al Endpoint con el IdInmueble "+inmueble.IdInmueble+$" id propietario: {inmueble.IdProp},Id Direccion: {inmueble.IdDire},Id tipo: {inmueble.IdTip},Mtros 2: {inmueble.Metros2},Precio: {inmueble.Precio}, Descripcion: {inmueble.Descripcion} ");
         _logger.LogInformation("EndPoint Guardar: "+inmueble.ToString());
-        /*if (ModelState.IsValid)
-        {
-            
-        }*/
         try
             {
-                if (inmueble.IdInmueble == 0)
-                {
+                if (inmueble.IdInmueble == 0){
                     int idCreado= _repo.Crear(inmueble);
                     _logger.LogInformation($"Se ha creado un nuevo inmueble con id: {idCreado}", inmueble.IdInmueble);
-                }
-                else
-                {
+                }else{
                     _repo.Modificar(inmueble);
                     _logger.LogInformation($"Se ha modificado el inmueble con id: {inmueble.IdInmueble}", inmueble.IdInmueble);
                 }

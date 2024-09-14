@@ -31,7 +31,7 @@ public class RepositorioInquilino: RepositorioBase{
         using(MySqlConnection connection = new MySqlConnection(ConnectionString)){
             connection.Open();
             string query = "UPDATE inquilino SET dni=@Dni, apellido=@Apellido, nombre=@Nombre, telefono=@Telefono, correo=@Correo "+
-            "WHERE idInquilino = @IdInquilino";
+            ", estado = @Estado WHERE idInquilino = @IdInquilino";
             using(MySqlCommand command = new MySqlCommand(query, connection)){
                 command.Parameters.AddWithValue("@Dni", inquilino.Dni);
                 command.Parameters.AddWithValue("@Apellido", inquilino.Apellido);
@@ -39,6 +39,7 @@ public class RepositorioInquilino: RepositorioBase{
                 command.Parameters.AddWithValue("@Telefono", inquilino.Telefono);
                 command.Parameters.AddWithValue("@Correo", inquilino.Correo);
                 command.Parameters.AddWithValue("@IdInquilino", inquilino.IdInquilino);
+                command.Parameters.AddWithValue("@Estado", inquilino.Estado);
                 filasAfectadas = command.ExecuteNonQuery();
             }
         }

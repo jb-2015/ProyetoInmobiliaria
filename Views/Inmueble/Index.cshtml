@@ -14,6 +14,7 @@
     <thead class="table-dark">
         <tr>
             <th>@Html.DisplayNameFor(model => model.First().tipo)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Descripcion)</th>
             <th>@Html.DisplayNameFor(model => model.First().CantidadAmbientes)</th>
             <th>@Html.DisplayNameFor(model => model.First().Precio)</th>
             <th>@Html.DisplayNameFor(model => model.First().Cochera)</th>
@@ -27,8 +28,9 @@
         {
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.tipo.Observacion)</td>
+                <td>@Html.DisplayFor(modelItem => item.Descripcion)</td>
                 <td>@Html.DisplayFor(modelItem => item.CantidadAmbientes)</td>
-                <td>@Html.DisplayFor(modelItem => item.Precio)</td>
+                <td>$@Html.DisplayFor(modelItem => item.Precio)</td>
                 <td>@Html.DisplayFor(modelItem => item.Cochera)</td>
                 <td>@Html.DisplayFor(modelItem => item.Piscina)</td>
                 <td>@Html.DisplayFor(modelItem => item.Mascotas)</td>

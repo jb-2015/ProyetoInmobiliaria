@@ -15,6 +15,16 @@ public class InquilinoController : Controller{
         return View(inquilinos);
     }
 
+    public IActionResult Detalle(int id){
+        Inquilino inquilino = null;
+        try{
+            inquilino = repo.Obtener(id);
+        }catch (System.Exception){
+            _logger.LogInformation("inquilino/Detalle/Error al obtener el inquilino.");
+        }
+        return View(inquilino);
+    }
+
     public IActionResult Editar(int Id){
         if(Id == 0){
             return View();
@@ -25,6 +35,20 @@ public class InquilinoController : Controller{
 
     public IActionResult Crear(){
         return View();
+    }
+
+    [HttpPost]
+    public IActionResult Alta(int Id){
+        Inquilino inquilino = null;
+        try{
+            inquilino = repo.Obtener(Id);
+            inquilino.Estado = true;
+            repo.Modificar(inquilino);
+            return RedirectToAction("Detalle", "Inquilino", new {Id = inquilino.IdInquilino});
+        }catch (System.Exception){
+            _logger.LogInformation("Inquilino/Alta error al dar de alta");
+        }
+        return RedirectToAction("Index");
     }
 
     [HttpPost]

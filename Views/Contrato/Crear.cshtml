@@ -14,8 +14,11 @@
             
             <div class="form-group mb-3">
                 <label asp-for="Contrato.IdInmueble" class="form-label">Inmueble</label>
-                <select asp-for="Contrato.IdInmueble" asp-items="@(new SelectList(Model.Inmuebles, "IdInmueble", "TipoYDireccion"))" class="form-control"></select>
-                <span asp-validation-for="Contrato.IdInmueble" class="text-danger"></span>
+                <select class="form-control" name="Contrato.IdInmueble">
+                    @foreach(var m in Model.Inmuebles){
+                        <option value="@m.IdInmueble">@m.direccion.Calle @m.direccion.Altura, @m.direccion.Ciudad. Tipo @m.tipo.Observacion</option>
+                    }
+                </select>
             </div>
             
             <div class="form-group mb-3">

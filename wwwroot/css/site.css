@@ -90,6 +90,27 @@ body {
   border-color: #e9f26bad;
 }
 
+.btn-editbt, .btn-borrarbt, .btn-detallebt, .btn-exitobt{
+  color: #fff;
+  margin-top: 10px;
+}
+.btn-detallebt{
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+.btn-borrarbt{
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+.btn-editbt{
+  background-color: #e0a800;
+  border-color: #d39e00;
+}
+.btn-exitobt{
+  background-color: #198754;
+  border-color: #198754;
+}
+
 /* button Editar */
 .btn-editar  {
   background-color: #f5d38bab;
@@ -111,7 +132,7 @@ body {
 
 /* button Eliminar */
 .btn-eliminar {
-  background-color: #a89f9ed1;
+  background-color: #ff3c28d1;
   border-color: #978383d4;
   color: white;
   padding: 5px 15px;
@@ -125,12 +146,12 @@ body {
 }
 
 .btn-eliminar:hover {
-  background-color: #bbe9f0bb;
-  border-color: #978383d4;
+  /* background-color: #bbe9f0bb; */
+  border-color: #ff3c28d1;
 }
 /* button guardar */
 
-.btn-primary{
+.btn-primario{
   background-color: #a89f9ed1;
   border-color: #978383d4;
   color: white;
