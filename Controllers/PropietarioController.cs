@@ -1,6 +1,7 @@
 //propietarioController
 using Microsoft.AspNetCore.Mvc;
 using ProyetoInmobiliaria.Models;
+using Microsoft.AspNetCore.Authorization;
 public class PropietarioController : Controller{
     private readonly ILogger<PropietarioController> _logger;
     private RepositorioPropietario repo;

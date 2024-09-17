@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ProyetoInmobiliaria.Models;
+using Microsoft.AspNetCore.Authorization;
 public class PagoController:Controller{
     private RepositorioPago repo = new RepositorioPago();
     private RepositorioContrato repoContrato = new RepositorioContrato();

@@ -9,6 +9,20 @@
     <a href="@Url.Action("Crear", "Inquilino")" class="btn btn-agregar">Crear Inquilino</a>
 </p>
 
+<div class="displayDeFiltros">
+    <div class="barraDeBusqueda">
+        <input type="text" placeholder="Buscar por DNI..." id="buscarInquilinoDNI" class="form-control">
+        <button type="button" class="btn btn-primary" id="filtrarPorDni" title="Buscar"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
+    <div class="barraDeBusqueda">
+        <input type="text" placeholder="Buscar por nombre y apellido..." id="buscarInquilinoNombre" class="form-control">
+        <button type="button" class="btn btn-primary" id="filtrarPorNombre" title="Buscar"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
+    <div class="barraDeBusqueda">
+        <input type="text" placeholder="Buscar por email..." id="buscarInquilinoEmail" class="form-control">
+        <button type="button" class="btn btn-primary" id="filtrarPorEmail" title="Buscar"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
+</div>
 <table class="table table-even-columns table-striped table-hover table-bordered">
     <thead class="table-dark">
         <tr>
@@ -20,7 +34,7 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="tablaInquilinos">
         @foreach (var item in Model)
         {
             <tr>
@@ -47,3 +61,6 @@
         }
     </tbody>
 </table>
+@section Scripts {
+    <script src="~/js/inquilinoScript.js"></script>
+}

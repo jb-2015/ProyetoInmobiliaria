@@ -2,7 +2,7 @@ using MySql.Data.MySqlClient;
 using ProyetoInmobiliaria.Models;
 
 public class RepositorioInmueble: RepositorioBase{
- RepositorioDireccion repoDire = new RepositorioDireccion();
+RepositorioDireccion repoDire = new RepositorioDireccion();
 
 
     private readonly RepositorioPropietario repoPropie = new RepositorioPropietario();

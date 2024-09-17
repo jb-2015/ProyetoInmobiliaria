@@ -41,6 +41,15 @@ body {
 
 /* INQUILINO - PROPIETARIO  */
 
+.barraDeBusqueda{
+  display: flex;
+  width: 30%;
+  margin: 10px;
+}
+.displayDeFiltros{
+  display: flex;
+}
+
 /*  tabla gral */
 .table {
   border-collapse: separate;
@@ -329,7 +338,7 @@ color: #354367;
 }
 
 .btn-primary {
-  margin-top: 10px;
+  margin:0px 10px;
 }
 
 .crear-inmueble .formulario-formulario {

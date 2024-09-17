@@ -1,11 +1,14 @@
-<form class="w-50 bg-light p-4 mx-auto" style="border-radius:10px">
-    <div class="form-outline mb-4">
-        <label for="emailLogin" class="form-label">Email</label>
-        <input type="email" id="emailLogin" class="form-control">
+@model LoginViewModel
+
+<form asp-action="Autenticacion" method="post">
+    <div>
+        <label asp-for="Email"></label>
+        <input asp-for="Email"/>
     </div>
-    <div class="form-outline mb-4">
-        <label for="passwordLogin" class="form-label">Password</label>
-        <input type="password" id="passwordLogin" class="form-control">
+    <div>
+        <label asp-for="Password"></label>
+        <input asp-for="Password" type="password"/>
     </div>
-    <button class="btn btn-primary btn-block mb-4">Login</button>
+    <button type="submit" class="btn">Iniciar</button>
+    <a href="@Url.Action("Crear","Usuario")">Crear un usuario</a>
 </form>
