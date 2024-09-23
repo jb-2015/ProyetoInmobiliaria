@@ -1,9 +1,0 @@
-Juan Becerra 2:35  23/08
-    Ignacio, ahi estaba viendo que cuando enviasa crear
-     un nuevo propietario o inquilino envias todos los atributos en parametros, 
-     no podrias hacer ahi en el parametro poner un new Propietario(... ) y ahi pones los atributos?
-Ignacio 19:51 29/08
-    Ahí hice las entidades, faltan los repo. Una consulta, que les parece la idea de (en la entidad 
-    Inmueble) en vez de tener un atributo booleano "disponible" y otro booleano "estado" no tenemos
-    un solo atributo que sea de tipo int "estado" y que almacene 0 si esta de baja, 1 si esta disponible
-    2 si esta ocupado. Que manejemos los estados del Inmueble con numeros 

@@ -1,0 +1,41 @@
+@model List<Usuario>
+@{
+    ViewData["Title"] = "Usuarios";
+}
+<table class="table table-even-columns table-striped table-hover table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Email</th>
+            <th>Rol</th>
+            <th>Avatar</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var u in Model){
+        <tr>
+            <td>@u.Nombre</td>
+            <td>@u.Apellido</td>
+            <td>@u.Email</td>
+            <td>@u.Rol</td>
+            <td><img src="@u.Avatar" class="img-fluid" alt="avatar"></td>
+            <td class="align-items-center w-auto">
+                    <a href="@Url.Action("Editar", "Usuario", new { id = u.IdUsuario })" class="btn btn-editbt mx-1">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                    <form asp-action="Borrar" class="mx-1" method="post" style="display:inline;">
+                        <input type="hidden" name="idUsuario" value="@u.IdUsuario" />
+                        <button type="submit" class="btn btn-borrarbt" title="Borrar">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </form>
+                    <a class="btn btn-detallebt mx-1" href="/Usuario/Detalle/@u.IdUsuario">
+                        <i class="fa-solid fa-list"></i>
+                    </a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

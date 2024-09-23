@@ -1,4 +1,4 @@
-@model InmuebleViewModel
+@model InmuebleDireccion
 
 @{
     ViewData["title"]="Crear Inmueble";
@@ -49,14 +49,32 @@
                     </select>
                 </div>
                 <div class="form-group mb-3">
-                    <label asp-for="Inmueble.IdDireccion" class="form-label">Direccion</label>
-                    <select asp-for="Inmueble.IdDireccion" asp-items="@(new SelectList(Model.Direcciones, "IdDireccion", "DireccionCompleta"))" class="form-control">
-                    </select>
+                    <label asp-for="Direccion.Calle" class="form-label">Calle</label>
+                    <input type="text" asp-for="Direccion.Calle" class="form-control">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="Direccion.Altura" class="form-label">Altura</label>
+                    <input type="text" asp-for="Direccion.Altura" class="form-control">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="Direccion.Cp" class="form-label">Codigo Postal</label>
+                    <input type="text" asp-for="Direccion.Cp" class="form-control">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="Direccion.Ciudad" class="form-label">Ciudad</label>
+                    <input type="text" asp-for="Direccion.Ciudad" class="form-control">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="Direccion.Coordenadas" class="form-label">Coordenadas</label>
+                    <input type="text" asp-for="Direccion.Coordenadas" class="form-control">
                 </div>
                 
                 <div class="form-group mb-3">
                     <label asp-for="Inmueble.IdPropietario" class="form-label">Propietarios</label>
-                    <select asp-for="Inmueble.IdPropietario" asp-items="@(new SelectList(Model.Propietarios, "IdPropietario", "NombreYApellido"))" class="form-control">
+                    <select asp-for="Inmueble.IdPropietario"class="form-control">
+                        @foreach(var p in Model.Propietarios){
+                            <option value="@p.IdPropietario">@p.Apellido @p.Nombre</option>
+                        }
                     </select>
                 </div>
                 

@@ -11,9 +11,4 @@ public class Propietario{
     public string Telefono { get; set; } = "";
     public string Correo { get; set; } = "";
     public Boolean Estado { get; set; }
-    public string NombreYApellido{
-        get{
-            return $"{Nombre} {Apellido}";
-        }
-    }
 }

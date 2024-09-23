@@ -1,0 +1,45 @@
+@model ProyetoInmobiliaria.Models.Propietario
+@{
+    ViewData["Title"] = "Detalles de Propietario";
+}
+<table class="table">
+    <thead class="table-dark">
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Dni)</th>
+            <th>@Html.DisplayNameFor(model => model.Nombre)</th>
+            <th>@Html.DisplayNameFor(model => model.Apellido)</th>
+            <th>@Html.DisplayNameFor(model => model.Telefono)</th>
+            <th>@Html.DisplayNameFor(model => model.Correo)</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.Dni</td>
+            <td>@Model.Nombre</td>
+            <td>@Model.Apellido</td>
+            <td>@Model.Telefono</td>
+            <td>@Model.Correo</td>
+            <td style="d-flex align-items-center w-auto">
+                <a class="btn btn-editbt mx-1" href="/Propietario/Editar/@Model.IdPropietario">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </a>
+                @if(Model.Estado){
+                    <form action="/Propietario/Borrar" class="mx-1" method="post">
+                        <input type="hidden" name="id" value="@Model.IdPropietario">
+                        <button type="submit" class="btn btn-borrarbt">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </form>
+                }else{
+                    <form action="/Propietario/Alta" method="post" class="mx-1">
+                        <input type="hidden" name="id" value="@Model.IdPropietario">
+                        <button type="submit" class="btn btn-exitobt">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </button>
+                    </form>
+                }
+            </td>
+        </tr>
+    </tbody>
+</table>

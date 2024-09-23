@@ -10,6 +10,23 @@
     @Html.ActionLink("Crear Propietario", "Crear", "Propietario", null, new { @class = "btn btn-agregar" })
 </p>
 
+<div class="displayDeFiltros">
+    <div class="barraDeBusqueda">
+        <input type="text" placeholder="Buscar por DNI..." id="buscarPropietarioDNI" class="form-control">
+        <button type="button" class="btn btn-primary" id="filtrarPorDni" title="Buscar"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
+    <div class="barraDeBusqueda">
+        <input type="text" placeholder="Buscar por apellido..." id="buscarPropietarioApellido" class="form-control">
+        <button type="button" class="btn btn-primary" id="filtrarPorApellido" title="Buscar"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
+    <div class="barraDeBusqueda">
+        <input type="text" placeholder="Buscar por email..." id="buscarPropietarioEmail" class="form-control">
+        <button type="button" class="btn btn-primary" id="filtrarPorEmail" title="Buscar"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
+    <div class="barraDeBusqueda">
+        <button type="button" class="btn btn-danger" id="propietariosDadosDeBaja">Dados de baja</button>
+    </div>
+</div>
 
 <table class="table table-even-columns table-striped table-hover table-bordered">
     <thead class="table-dark">
@@ -32,7 +49,7 @@
             <th>Acciones</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="tablaPropietarios">
         @foreach (var item in Model)
         {
             <tr>
@@ -51,12 +68,19 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Correo)
                 </td>
-                <td>
-                <a href="@Url.Action("Editar", new { id = item.IdPropietario })" class="btn btn-editar">Editar</a>
-                    <form asp-action="Borrar" method="post" style="display:inline;">
+                <td class="d-flex align-items-center w-auto">
+                    <a class="btn btn-editbt mx-1" href="@Url.Action("Editar", new { id = item.IdPropietario })">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                    <form action="/Propietario/Borrar" class="mx-1" method="post">
                         <input type="hidden" name="id" value="@item.IdPropietario" />
-                        <input type="submit" value="Eliminar" class="btn btn-eliminar" />
-                    </form>
+                        <button type="submit" class="btn btn-borrarbt" title="Borrar">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </form> 
+                    <a class="btn btn-detallebt mx-1" href="/Propietario/Detalle/@item.IdPropietario">
+                        <i class="fa-solid fa-list"></i>
+                    </a>
                 </td>
             </tr>
         }
@@ -72,3 +96,6 @@
         </div>
     </div>
 </div>
+@section Scripts {
+    <script src="~/js/propietarioScript.js"></script>
+}

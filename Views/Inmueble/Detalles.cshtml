@@ -12,40 +12,54 @@
         <div class="visorDetalles">
             <h2>@Model.Inmueble.Descripcion</h2>
             <label for="">Cantidad de ambientes</label>
-            <h3>@Model.Inmueble.CantidadAmbientes</h3>
+            <h5>@Model.Inmueble.CantidadAmbientes</h5>
             <label for="">Metros cuadrados</label>
-            <h3>@Model.Inmueble.Metros2</h3>
-            <label for="">Cantidad de habitaciones</label>
-            <h3>@Model.Inmueble.CantidadAmbientes</h3>
-            @if (Model.Inmueble.Cochera)
-            {
-                <h4>Cochera</h4>
-            }
-            @if (Model.Inmueble.Piscina)
-            {
-                <h4>Piscina</h4>
-            }
-            @if (Model.Inmueble.Mascotas)
-            {
-                <h4>Se aceptan mascotas</h4>
+            <h5>@Model.Inmueble.Metros2</h5>
+            @if(Model.Inmueble.Cochera || Model.Inmueble.Piscina || Model.Inmueble.Mascotas){
+                <h4>Características:</h4>
+                @if (Model.Inmueble.Cochera)
+                {
+                    <div class="d-flex align-items-center">
+                        <img src="/img/private-garage.png" alt="garage"> 
+                        <h4 title="Garage">Tiene garage</h4>
+                    </div>
+                }
+                @if (Model.Inmueble.Piscina)
+                {
+                    <div class="d-flex align-items-center">  
+                        <i class="fa-solid fa-person-swimming"></i>
+                        <h4 title="Pileta">Tiene piscina</h4>
+                    </div>
+                }
+                @if (Model.Inmueble.Mascotas)
+                {
+                    <div class="d-flex align-items-center">  
+                        <i class="fa-solid fa-paw"></i>
+                        <h4 title="Mascotas">Se aceptan mascotas</h4>
+                    </div>
+                }
             }
         </div>
     </div>
     <div class="columna">
-        <h2>Propietario: <a href="@Url.Action("filtrar","Propietario", new {id = Model.Inmueble.propietario})">@Model.Inmueble.propietario.Nombre @Model.Inmueble.propietario.Apellido</a></h2>
-       
-        <h2>Contrato vigente</h2>
-        @if(Model.Contrato != null)
-        {
-            
-            <p>Desde @Model.Contrato.FechaInicio Hasta  @Model.Contrato.FechaFin</p>
-            <a href="/Pago/Index/@Model.Contrato.IdContrato">Pagos realizados</a>
+        <h3>Propietario: <a href="@Url.Action("Detalle","Propietario", new {id = Model.Inmueble.propietario.IdPropietario})">@Model.Inmueble.propietario.Nombre @Model.Inmueble.propietario.Apellido</a></h3>
+        <h4>Contrato vigente: </h4>
+        @if(Model.Contrato != null){
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">@Model.Contrato.inmueble.propietario.Apellido - @Model.Contrato.inquilino.Apellido</h5>
+                    <p class="card-text">Desde @Model.Contrato.FechaInicio.ToString("dd/MM/yyyy") Hasta  @Model.Contrato.FechaFin.ToString("dd/MM/yyyy")</p>
+                    <p class="card-text">$@Model.Contrato.Monto</p>
+                    <a class="btn btn-primary" href="/Pago/Index/@Model.Contrato.IdContrato">Pagos realizados</a>
+                </div>
+            </div>
+        }else{
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">No existen contratos para este inmueble</h5>
+                    <a class="btn btn-primary" href="/Contrato/Crear/@Model.Inmueble.IdInmueble">Crear uno</a>
+                </div>
+            </div>
         }
-        else
-        {
-            <p>No existen contratos para este inmueble</p>
-            <a href="@Url.Action("Crear","Contrato", new { id_i = Model.Inmueble.IdInmueble})" > Crear uno</a>
-        }
-        
     </div>
 </div>

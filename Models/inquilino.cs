@@ -11,11 +11,4 @@ public class Inquilino
     public string? Telefono {get; set;}
     public string? Correo {get; set;}
     public bool Estado {get; set;}
-    
-    public string NombreYApellido{
-        get{
-            return $"{Nombre} {Apellido}";
-        }
-    }
-   
 }

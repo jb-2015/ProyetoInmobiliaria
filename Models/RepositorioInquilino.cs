@@ -31,7 +31,7 @@ public class RepositorioInquilino: RepositorioBase{
         using(MySqlConnection connection = new MySqlConnection(ConnectionString)){
             connection.Open();
             string query = "UPDATE inquilino SET dni=@Dni, apellido=@Apellido, nombre=@Nombre, telefono=@Telefono, correo=@Correo "+
-            "WHERE idInquilino = @IdInquilino";
+            ", estado = @Estado WHERE idInquilino = @IdInquilino";
             using(MySqlCommand command = new MySqlCommand(query, connection)){
                 command.Parameters.AddWithValue("@Dni", inquilino.Dni);
                 command.Parameters.AddWithValue("@Apellido", inquilino.Apellido);
@@ -39,6 +39,7 @@ public class RepositorioInquilino: RepositorioBase{
                 command.Parameters.AddWithValue("@Telefono", inquilino.Telefono);
                 command.Parameters.AddWithValue("@Correo", inquilino.Correo);
                 command.Parameters.AddWithValue("@IdInquilino", inquilino.IdInquilino);
+                command.Parameters.AddWithValue("@Estado", inquilino.Estado);
                 filasAfectadas = command.ExecuteNonQuery();
             }
         }
@@ -110,6 +111,114 @@ public class RepositorioInquilino: RepositorioBase{
         }
         return filasAfectadas;
     }
+
+    public List<Inquilino> DadosDeBaja(){
+        List<Inquilino> inquilinos = new List<Inquilino>();
+        using(MySqlConnection connection = new MySqlConnection(ConnectionString)){
+            connection.Open();
+            string query = "SELECT * FROM inquilino WHERE estado = false";
+            using(MySqlCommand command = new MySqlCommand(query, connection)){
+                using(MySqlDataReader reader = command.ExecuteReader()){
+                    while(reader.Read()){
+                        Inquilino Inquilino = new Inquilino{
+                            IdInquilino = reader.GetInt32("IdInquilino"),
+                            Dni = reader.GetString("dni"),
+                            Apellido = reader.GetString("apellido"),
+                            Nombre = reader.GetString("nombre"),
+                            Telefono = reader.GetString("telefono"),
+                            Correo = reader.GetString("correo"),
+                            Estado = reader.GetBoolean("estado")
+                            };
+                        inquilinos.Add(Inquilino);
+                    }
+                }
+            }
+        }
+        return inquilinos;
+    }
+
+
+    //LISTAR POR DNI
+    public List<Inquilino> ListarPorDni(string Dni){
+        List<Inquilino> inquilinos = new List<Inquilino>();
+        using(MySqlConnection connection = new MySqlConnection(ConnectionString)){
+            connection.Open();
+            string query = "SELECT * FROM inquilino WHERE dni LIKE @Dni AND estado = true";
+            using(MySqlCommand command = new MySqlCommand(query, connection)){
+                command.Parameters.AddWithValue("@Dni", Dni+"%");
+                using(MySqlDataReader reader = command.ExecuteReader()){
+                    while(reader.Read()){
+                        Inquilino Inquilino = new Inquilino{
+                            IdInquilino = reader.GetInt32("IdInquilino"),
+                            Dni = reader.GetString("dni"),
+                            Apellido = reader.GetString("apellido"),
+                            Nombre = reader.GetString("nombre"),
+                            Telefono = reader.GetString("telefono"),
+                            Correo = reader.GetString("correo"),
+                            Estado = reader.GetBoolean("estado")
+                            };
+                        inquilinos.Add(Inquilino);
+                    }
+                }
+            }
+        }
+        return inquilinos;
+    }
+
+    //LISTAR POR APELLIDO
+    public List<Inquilino> ListarPorApellido(string Apellido){
+        List<Inquilino> inquilinos = new List<Inquilino>();
+        using(MySqlConnection connection = new MySqlConnection(ConnectionString)){
+            connection.Open();
+            string query = "SELECT * FROM inquilino WHERE apellido LIKE @Apellido AND estado = true";
+            using(MySqlCommand command = new MySqlCommand(query, connection)){
+                command.Parameters.AddWithValue("@Apellido", Apellido+"%");
+                using(MySqlDataReader reader = command.ExecuteReader()){
+                    while(reader.Read()){
+                        Inquilino Inquilino = new Inquilino{
+                            IdInquilino = reader.GetInt32("IdInquilino"),
+                            Dni = reader.GetString("dni"),
+                            Apellido = reader.GetString("apellido"),
+                            Nombre = reader.GetString("nombre"),
+                            Telefono = reader.GetString("telefono"),
+                            Correo = reader.GetString("correo"),
+                            Estado = reader.GetBoolean("estado")
+                            };
+                        inquilinos.Add(Inquilino);
+                    }
+                }
+            }
+        }
+        return inquilinos;
+    }
+
+    //LISTAR POR EMAIL
+    public List<Inquilino> ListarPorEmail(string Email){
+        List<Inquilino> inquilinos = new List<Inquilino>();
+        using(MySqlConnection connection = new MySqlConnection(ConnectionString)){
+            connection.Open();
+            string query = "SELECT * FROM inquilino WHERE correo LIKE @Email AND estado = true";
+            using(MySqlCommand command = new MySqlCommand(query, connection)){
+                command.Parameters.AddWithValue("@Email", Email+"%");
+                using(MySqlDataReader reader = command.ExecuteReader()){
+                    while(reader.Read()){
+                        Inquilino Inquilino = new Inquilino{
+                            IdInquilino = reader.GetInt32("IdInquilino"),
+                            Dni = reader.GetString("dni"),
+                            Apellido = reader.GetString("apellido"),
+                            Nombre = reader.GetString("nombre"),
+                            Telefono = reader.GetString("telefono"),
+                            Correo = reader.GetString("correo"),
+                            Estado = reader.GetBoolean("estado")
+                            };
+                        inquilinos.Add(Inquilino);
+                    }
+                }
+            }
+        }
+        return inquilinos;
+    }
+
 }
 
 // //repositorioInquilino.cs

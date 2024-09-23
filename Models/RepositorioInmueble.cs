@@ -2,7 +2,7 @@ using MySql.Data.MySqlClient;
 using ProyetoInmobiliaria.Models;
 
 public class RepositorioInmueble: RepositorioBase{
- RepositorioDireccion repoDire = new RepositorioDireccion();
+RepositorioDireccion repoDire = new RepositorioDireccion();
 
 
     private readonly RepositorioPropietario repoPropie = new RepositorioPropietario();
@@ -49,8 +49,8 @@ public class RepositorioInmueble: RepositorioBase{
             connection.Open();
             string query = "UPDATE inmueble SET idPropietario = @IdPropietario, idDireccion = @IdDireccion,"+
             "idTipo = @IdTipo, metros2 = @Metros2, cantidadAmbientes = @CantidadAmbientes, disponible = @Disponible, "+
-            "precio = @Precio, descripcion = @Descripcion, cochera = @Cochera, piscina = @Piscina, mascotas = @Mascotas, UrlImagen=@UrlImagen "+
-            " WHERE idInmueble = @IdInmueble";
+            "precio = @Precio, descripcion = @Descripcion, cochera = @Cochera, piscina = @Piscina, mascotas = @Mascotas, UrlImagen=@UrlImagen, "+
+            "estado = @Estado WHERE idInmueble = @IdInmueble";
             using(MySqlCommand command = new MySqlCommand(query, connection)){
                 command.Parameters.AddWithValue("@IdPropietario", inmueble.IdPropietario);
                 command.Parameters.AddWithValue("@IdDireccion", inmueble.IdDireccion);
@@ -65,6 +65,7 @@ public class RepositorioInmueble: RepositorioBase{
                 command.Parameters.AddWithValue("@Mascotas", inmueble.Mascotas);
                 command.Parameters.AddWithValue("@IdInmueble", inmueble.IdInmueble);
                 command.Parameters.AddWithValue("@UrlImagen",inmueble.UrlImagen);
+                command.Parameters.AddWithValue("@Estado",inmueble.Estado);
                 filasAfectadas = command.ExecuteNonQuery();
             }
         }
@@ -107,55 +108,164 @@ public class RepositorioInmueble: RepositorioBase{
                 }
             }
         }
-        return inmuebles ?? new List<Inmueble>();
+        return inmuebles;
     }
-    // Obtener
-    public Inmueble Obtener(int idInmueble)
-{
-    Inmueble inmueble = null;
-    using (MySqlConnection connection = new MySqlConnection(ConnectionString))
-    {
-        connection.Open();
-        string query = "SELECT * FROM inmueble WHERE idInmueble = @IdInmueble AND estado = true";
-        using (MySqlCommand command = new MySqlCommand(query, connection))
-        {
-            command.Parameters.AddWithValue("@IdInmueble", idInmueble); // Corregido el nombre del parámetro
-            using (MySqlDataReader reader = command.ExecuteReader())
-            {
-                if (reader.Read())
-                {
-                    Propietario p = repoPropie.Obtener(reader.GetInt32("IdPropietario"));
-                    Direccion d = repoDire.Obtener(reader.GetInt32("IdDireccion"));
-                    Tipo t = repoTipo.Obtener(reader.GetInt32("IdTipo"));
-                    inmueble = new Inmueble
-                    {
-                        IdPropietario= p.IdPropietario,
-                        IdDireccion = d.IdDireccion,
-                        IdTipo = t.IdTipo,
-                        IdInmueble = reader.GetInt32("idInmueble"),
-                        propietario = p,
-                        direccion = d,
-                        tipo = t,
-                        Metros2 = reader.GetString("metros2"),
-                        CantidadAmbientes = reader.GetInt32("cantidadAmbientes"),
-                        Disponible = reader.GetBoolean("disponible"),
-                        Precio = reader.GetDecimal("precio"),
-                        Descripcion = reader.GetString("descripcion"),
-                        Cochera = reader.GetBoolean("cochera"),
-                        Piscina = reader.GetBoolean("piscina"),
-                        Mascotas = reader.GetBoolean("mascotas"),
-                        Estado = reader.GetBoolean("estado"),
-                        UrlImagen= reader.GetString("UrlImagen")
-                    };
+
+    public List<Inmueble> ListarNoDisponibles(){
+        List<Inmueble> inmuebles = new List<Inmueble>();
+        using(MySqlConnection connection = new MySqlConnection(ConnectionString)){
+            connection.Open();
+            string query = "SELECT * FROM inmueble WHERE estado = false";
+            using(MySqlCommand command = new MySqlCommand(query, connection)){
+                using(MySqlDataReader reader = command.ExecuteReader()){
+                    while(reader.Read()){
+                        Propietario p = repoPropie.Obtener(reader.GetInt32("IdPropietario"));
+                        Direccion d = repoDire.Obtener(reader.GetInt32("IdDireccion"));
+                        Tipo t = repoTipo.Obtener(reader.GetInt32("IdTipo"));
+                        Inmueble inmueble = new Inmueble{
+                            IdPropietario= p.IdPropietario,
+                            IdDireccion= d.IdDireccion,
+                            IdTipo = t.IdTipo,
+                            IdInmueble = reader.GetInt32("IdInmueble"),
+                            propietario = p,
+                            direccion = d,
+                            tipo = t,
+                            Metros2 = reader.GetString("metros2"),
+                            CantidadAmbientes = reader.GetInt32("cantidadAmbientes"),
+                            Disponible = reader.GetBoolean("disponible"),
+                            Precio = reader.GetDecimal("precio"),
+                            Descripcion = reader.GetString("descripcion"),
+                            Cochera = reader.GetBoolean("cochera"),
+                            Piscina = reader.GetBoolean("piscina"),
+                            Mascotas = reader.GetBoolean("mascotas"),
+                            Estado = reader.GetBoolean("estado"),
+                            UrlImagen= reader.GetString("UrlImagen")
+                            };
+                        inmuebles.Add(inmueble);
+                    }
                 }
             }
         }
+        return inmuebles;
+    }
+        public List<Inmueble> ListarPorPropietario(int id){
+        List<Inmueble> inmuebles = new List<Inmueble>();
+        using(MySqlConnection connection = new MySqlConnection(ConnectionString)){
+            connection.Open();
+            string query = "SELECT * FROM inmueble WHERE idPropietario = @IdPropietario";
+            using(MySqlCommand command = new MySqlCommand(query, connection)){
+                command.Parameters.AddWithValue("@IdPropietario", id);
+                using(MySqlDataReader reader = command.ExecuteReader()){
+                    while(reader.Read()){
+                        Propietario p = repoPropie.Obtener(reader.GetInt32("IdPropietario"));
+                        Direccion d = repoDire.Obtener(reader.GetInt32("IdDireccion"));
+                        Tipo t = repoTipo.Obtener(reader.GetInt32("IdTipo"));
+                        Inmueble inmueble = new Inmueble{
+                            IdPropietario= p.IdPropietario,
+                            IdDireccion= d.IdDireccion,
+                            IdTipo = t.IdTipo,
+                            IdInmueble = reader.GetInt32("IdInmueble"),
+                            propietario = p,
+                            direccion = d,
+                            tipo = t,
+                            Metros2 = reader.GetString("metros2"),
+                            CantidadAmbientes = reader.GetInt32("cantidadAmbientes"),
+                            Disponible = reader.GetBoolean("disponible"),
+                            Precio = reader.GetDecimal("precio"),
+                            Descripcion = reader.GetString("descripcion"),
+                            Cochera = reader.GetBoolean("cochera"),
+                            Piscina = reader.GetBoolean("piscina"),
+                            Mascotas = reader.GetBoolean("mascotas"),
+                            Estado = reader.GetBoolean("estado"),
+                            UrlImagen= reader.GetString("UrlImagen")
+                            };
+                        inmuebles.Add(inmueble);
+                    }
+                }
+            }
+        }
+        return inmuebles;
+    }
 
-        
+    public List<Inmueble> ListarPorFechas(DateTime fechaInicio, DateTime fechaFin){
+        Console.WriteLine($"Fecha de Inicio: {fechaInicio}, Fecha de Fin: {fechaFin}");
+        List<Inmueble> inmuebles = new List<Inmueble>();
+        using(MySqlConnection connection = new MySqlConnection(ConnectionString)){
+            connection.Open();
+            string query = "SELECT i.* FROM inmueble i WHERE NOT EXISTS(SELECT 1 FROM contrato c WHERE c.idInmueble = i.idInmueble AND (c.fechaInicio < @FechaFin AND c.fechaFin > @FechaInicio)) AND i.estado = true;";
+            using(MySqlCommand command = new MySqlCommand(query, connection)){
+                command.Parameters.AddWithValue("@FechaInicio", fechaInicio);
+                command.Parameters.AddWithValue("@FechaFin", fechaFin);
+                using(MySqlDataReader reader = command.ExecuteReader()){
+                    while(reader.Read()){
+                        Propietario p = repoPropie.Obtener(reader.GetInt32("IdPropietario"));
+                        Direccion d = repoDire.Obtener(reader.GetInt32("IdDireccion"));
+                        Tipo t = repoTipo.Obtener(reader.GetInt32("IdTipo"));
+                        Inmueble inmueble = new Inmueble{
+                            IdPropietario= p.IdPropietario,
+                            IdDireccion= d.IdDireccion,
+                            IdTipo = t.IdTipo,
+                            IdInmueble = reader.GetInt32("IdInmueble"),
+                            propietario = p,
+                            direccion = d,
+                            tipo = t,
+                            Metros2 = reader.GetString("metros2"),
+                            CantidadAmbientes = reader.GetInt32("cantidadAmbientes"),
+                            Disponible = reader.GetBoolean("disponible"),
+                            Precio = reader.GetDecimal("precio"),
+                            Descripcion = reader.GetString("descripcion"),
+                            Cochera = reader.GetBoolean("cochera"),
+                            Piscina = reader.GetBoolean("piscina"),
+                            Mascotas = reader.GetBoolean("mascotas"),
+                            Estado = reader.GetBoolean("estado"),
+                            UrlImagen= reader.GetString("UrlImagen")
+                            };
+                        inmuebles.Add(inmueble);
+                    }
+                }
+            }
+        }
+        return inmuebles;
+    }
 
-}
-return inmueble;
-}
+    // Obtener
+    public Inmueble Obtener(int idInmueble){
+        Inmueble inmueble = null;
+        using (MySqlConnection connection = new MySqlConnection(ConnectionString)){
+            connection.Open();
+            string query = "SELECT * FROM inmueble WHERE idInmueble = @IdInmueble";
+            using (MySqlCommand command = new MySqlCommand(query, connection)){
+                command.Parameters.AddWithValue("@IdInmueble", idInmueble); // Corregido el nombre del parámetro
+                using (MySqlDataReader reader = command.ExecuteReader()){
+                    if (reader.Read()){
+                        Propietario p = repoPropie.Obtener(reader.GetInt32("idPropietario"));
+                        Direccion d = repoDire.Obtener(reader.GetInt32("idDireccion"));
+                        Tipo t = repoTipo.Obtener(reader.GetInt32("idTipo"));
+                        inmueble = new Inmueble{
+                            IdPropietario= reader.GetInt32("idPropietario"),
+                            IdDireccion = reader.GetInt32("idDireccion"),
+                            IdTipo = reader.GetInt32("idTipo"),
+                            IdInmueble = reader.GetInt32("idInmueble"),
+                            propietario = p,
+                            direccion = d,
+                            tipo = t,
+                            Metros2 = reader.GetString("metros2"),
+                            CantidadAmbientes = reader.GetInt32("cantidadAmbientes"),
+                            Disponible = reader.GetBoolean("disponible"),
+                            Precio = reader.GetDecimal("precio"),
+                            Descripcion = reader.GetString("descripcion"),
+                            Cochera = reader.GetBoolean("cochera"),
+                            Piscina = reader.GetBoolean("piscina"),
+                            Mascotas = reader.GetBoolean("mascotas"),
+                            Estado = reader.GetBoolean("estado"),
+                            UrlImagen= reader.GetString("urlImagen")
+                        };
+                    }
+                }
+            }
+        }
+        return inmueble;
+    }
 
 
       
@@ -174,44 +284,3 @@ return inmueble;
     }
 
 }
-// public class RepositorioInmueble{
-//     private readonly InmobiliariaContext context;
-
-//     public RepositorioInmueble(){
-//         context = new InmobiliariaContext();
-//     }
-
-//     //Crear
-//     public int Crear(Inmueble inmueble){
-//         var entidadCreada = context.Add(inmueble);
-//         context.SaveChanges();
-//         return entidadCreada.Entity.IdInmueble;
-//     }    
-
-//     //Modificar
-//     public int Modificar(Inmueble inmueble){
-//         context.Update(inmueble);
-//         int filasAfectadas = context.SaveChanges();
-//         return filasAfectadas;
-//     }
-
-//     //Listar
-//     public List<Inmueble> Listar(){
-//         return context.Inmueble.Where(i => i.Estado).ToList();
-//     }
-
-//     //Obtener
-//     public Inmueble Obtener(int IdInmueble){
-//         return context.Inmueble.Find(IdInmueble);
-//     }
-
-//     //Eliminar
-//     public int Eliminar(int IdInmueble){
-//         Inmueble inmueble = Obtener(IdInmueble);
-//         if(inmueble != null){
-//             inmueble.Estado = false;
-//             return Modificar(inmueble);
-//         }
-//         return -1;
-//     }   
-// }

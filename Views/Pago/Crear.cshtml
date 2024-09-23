@@ -1,0 +1,32 @@
+@model Pago 
+@{
+    ViewData["Title"] = "Nuevo pago";
+}
+<h2>Nuevo pago para el contrato: @Model.contrato.inmueble.propietario.Apellido - @Model.contrato.inquilino.Apellido</h2>
+<div class="container-formulario">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form asp-action="Guardar" class="formulario-formulario" method="post">
+                <input asp-for="IdContrato" type="hidden">
+                <input asp-for="IdPago" value="0" type="hidden">
+                <div class="form-group mb-3">
+                    <label asp-for="FechaPago" class="form-label">Fecha de pago</label>
+                    <input asp-for="FechaPago" type="date" value="" class="form-control" />
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="Importe" class="form-label">Importe</label>
+                    <input asp-for="Importe" type="number" class="form-control" />
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="NumeroPago" class="form-label">Numero de pago</label>
+                    <input asp-for="NumeroPago" class="form-control" />
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="Detalle" class="form-label">Detalle</label>
+                    <input asp-for="Detalle" class="form-control" />
+                </div>
+                <button type="submit" class="btn btn-primary">Crear</button>
+            </form>
+        </div>
+    </div>
+</div>

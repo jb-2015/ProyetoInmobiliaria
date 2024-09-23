@@ -1,4 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using System.Threading;
+@using System.Security.Claims;
+
+@{
+    var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+    var UserId = userIdClaim?.Value;
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -7,9 +15,13 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Inmobiliaria.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+
 <body class="@ViewData["BodyClass"]">
+
     <header>
+        @if (!Context.Request.Path.Value.Contains("Login")){ // agrego bloque if para envolver nav y no ver en login
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">InmoSams</a>
@@ -18,45 +30,81 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"
-                                asp-action="Privacy">Privacy</a>
+                    <ul class="navbar-nav flex-grow-1 d-flex flex-row justify-content-between">
+                        <div class="d-flex">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Inquilino</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/Inquilino/Crear">Crear/Ingresar</a></li>
+                                <li><a class="dropdown-item" href="/Inquilino/Index">Listar/Buscar</a></li>
+                            </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Inquilino" asp-action="Index">Inquilino</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Propietario</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/Propietario/Crear">Crear/Ingresar</a></li>
+                                <li><a class="dropdown-item" href="/Propietario/Index">Listar/Buscar</a></li>
+                            </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Propietario"
-                                asp-action="Index">Propietario</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Inmuebles</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/Inmueble/Crear">Crear/Ingresar</a></li>
+                                <li><a class="dropdown-item" href="/Inmueble/Index">Listar/Buscar</a></li>
+                            </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Inmueble"
-                                asp-action="Index">Administar Inmuebles</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Contrato</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/Contrato/Crear">Crear/Ingresar</a></li>
+                                <li><a class="dropdown-item" href="/Contrato/Index">Listar/Buscar</a></li>
+                            </ul>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Tipo"
                                 asp-action="Index">Tipos</a>
                         </li>
+                        </div>
+                        <div class="d-flex">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-dark" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Usuario
+                                    <i class="fa-solid fa-gear"></i>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" href="/Usuario/Crear">Crear</a></li>
+                                    <li><a class="dropdown-item" href="/Usuario/Index">Listar/Buscar</a></li>
+                                    <li><a class="dropdown-item"  href="@Url.Action("Editar", "Usuario", new {IdUsuario = UserId})">Editar</a></li>
+                                    
+                                    
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/Login/Logout" class="nav-link text-dark"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
+                            </li>
+                        </div>
+                        
                     </ul>
                 </div>
             </div>
         </nav>
+        }
     </header>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
-
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2024 - Inmobiliaria - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+    
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

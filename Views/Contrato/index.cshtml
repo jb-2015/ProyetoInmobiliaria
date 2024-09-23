@@ -1,0 +1,71 @@
+@model InmuebleContrato
+@{
+    ViewData["title"] = "Contratos";
+}
+
+<div class="displayDeFiltros">
+    <div class="barraDeFiltros">
+        <select id="selectFiltroPorInmueble" class="form-select">
+            <option disabled hidden selected>Filtrar por inmueble</option>
+            @foreach(var i in Model.Inmuebles){
+                <option value="@i.IdInmueble">@i.Descripcion</option>
+            }
+        </select>
+    </div>
+    <div class="barraDeFiltros">
+        <div class="displayDeFiltros">
+            <label for="desdeFiltroContrato" class="form-label mx-1">Desde</label>
+            <input type="Date" value="" id="desdeFiltroContrato" class="form-control">
+        </div>
+        <div class="displayDeFiltros">
+            <label for="hastaFiltroContrato" class="form-label mx-1">Hasta</label>
+            <input type="Date" value="" id="hastaFiltroContrato" class="form-control">
+        </div>
+        <div class="barraDeBusqueda d-flex justify-content-end">
+            <button type="button" class="btn btn-primary" id="buscarFiltroFechas">Buscar fechas</button>
+        </div>
+    </div>
+    <div class="barraDeFiltros filtroContratosPorDias">
+        <div class="form-check mx-1">
+            <input class="form-check-input" name="flexRadioDefault" value="1" type="radio" id="dias30">
+            <label class="form-check-label" for="dias30">30 dias</label>
+        </div>
+        <div class="form-check mx-1">
+            <input class="form-check-input" name="flexRadioDefault" value="2" type="radio" id="dias60">
+            <label class="form-check-label" for="dias60">60 dias</label>
+        </div>
+        <div class="form-check mx-1">
+            <input class="form-check-input" name="flexRadioDefault" value="3" type="radio" id="dias90">
+            <label class="form-check-label" for="dias90">90 dias</label>
+        </div>
+    </div>
+</div>
+<table class="table table-even-columns table-striped table-hover table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Inquilino</th>
+            <th>Inmueble</th>
+            <th>Monto</th>
+            <th>Fecha de Inicio</th>
+            <th>Fecha de Fin</th>
+            <th>Fecha de Anulacion</th>
+            <th>Pagos</th>
+        </tr>
+    </thead>
+    <tbody id="tablaContratos">
+        @foreach(var c in Model.Contratos){
+            <tr>
+                <td><a href="/Inquilino/Detalle/@c.IdInquilino">@c.inquilino.Nombre @c.inquilino.Apellido</a></td>
+                <td><a href="/Inmueble/Detalles/@c.IdInmueble">@c.inmueble.Descripcion</a></td>
+                <td>$@c.Monto</td>
+                <td>@c.FechaInicio.ToString("dd/MM/yyyy")</td>
+                <td>@c.FechaFin.ToString("dd/MM/yyyy")</td>
+                <td>@(c.FechaAnulacion.Millisecond > 0? c.FechaAnulacion.ToString("DD/MM/yyyy") : "---")</td>
+                <td><a href="/Pago/Index/@c.IdContrato" class="btn btn-primary">Pagos</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts {
+    <script src="~/js/contratoScript.js"></script>
+}

@@ -9,7 +9,7 @@ html {
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #83b5eb;
 }
 
 html {
@@ -40,6 +40,20 @@ body {
 
 
 /* INQUILINO - PROPIETARIO  */
+
+.barraDeFiltros{
+  display: flex;
+  margin: 10px;
+}
+.barraDeBusqueda{
+  display: flex;
+  width: 30%;
+  margin: 10px;
+}
+.displayDeFiltros{
+  display: flex;
+  align-items: center;
+}
 
 /*  tabla gral */
 .table {
@@ -90,6 +104,27 @@ body {
   border-color: #e9f26bad;
 }
 
+.btn-editbt, .btn-borrarbt, .btn-detallebt, .btn-exitobt{
+  color: #fff;
+  margin-top: 10px;
+}
+.btn-detallebt{
+  background-color: #9EABA2;
+  border-color: #9EABA2;
+}
+.btn-borrarbt{
+  background-color: #A36361;
+  border-color: #A36361;
+}
+.btn-editbt{
+  background-color: #F5BCBA;
+  border-color: #F5BCBA;
+}
+.btn-exitobt{
+  background-color: #198754;
+  border-color: #198754;
+}
+
 /* button Editar */
 .btn-editar  {
   background-color: #f5d38bab;
@@ -111,7 +146,7 @@ body {
 
 /* button Eliminar */
 .btn-eliminar {
-  background-color: #a89f9ed1;
+  background-color: #91453dd1;
   border-color: #978383d4;
   color: white;
   padding: 5px 15px;
@@ -125,12 +160,12 @@ body {
 }
 
 .btn-eliminar:hover {
-  background-color: #bbe9f0bb;
-  border-color: #978383d4;
+  /* background-color: #bbe9f0bb; */
+  border-color: #a08282de;
 }
 /* button guardar */
 
-.btn-primary{
+.btn-primario{
   background-color: #a89f9ed1;
   border-color: #978383d4;
   color: white;
@@ -233,7 +268,7 @@ color: #354367;
 /*ESTILOS DETALLES*/
 
 .containerDetalle {/*DEJAR ESTO ASI PARA MANTENER EL DISEÑO DE DOBLE COLUMNA*/
-  display: flex;
+  display: flex;  
   flex-direction: row;
   justify-content: space-around;
   width: inherit;
@@ -302,18 +337,96 @@ color: #354367;
   margin-bottom: 10px;
 }
 
+a{
+  text-decoration: none;
+}
+
 .form-control {
   width: 100%;
   max-width: 100%;
 }
 
 .btn-primary {
-  margin-top: 10px;
+  margin:0px 10px;
+  background-color: #7d988b;
+  border-color: #3b745a;
+
 }
 
 .crear-inmueble .formulario-formulario {
   max-width: 800px; 
   margin: 0 auto; 
+}
+
+
+/*FORMULARIO LOGIN   NO CAMBIAR NADA DE ESTE FORMULARIO*/
+/* Estilo del video */
+#bgVideo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    max-width: 1400px; /* Max tamaño del video */
+    max-height: 600px; /* Max altura del video */
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    object-fit:inherit /*video entero dentro de las proporciones */
+    
+}
+
+/* Contenedor formu*/
+.login-container {
+  background: rgba(255, 255, 255, 0.8); 
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  margin-top: 100px;
+}
+
+/* formu-registro-login */
+.form-control {
+  background-color: rgba(255, 255, 255, 0.9); 
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-size: 16px;
+}
+
+/* Button ingreso */
+.btn-success {
+  background-color: #739f7d;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+}
+
+/* stylo ancla */
+.logout-link {
+  font-size: 18px;
+  font-weight: bold;
+  background-color: #fff;
+  padding: 10px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+.logout-link:hover {
+  background-color: #aaca5f;
+}
+
+/* def lugar ancla */
+.anchor-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
 }
 
 
@@ -382,7 +495,7 @@ color: #354367;
 }
 
 .crear-inmueble-bg {
-  background-image: url('/img/11.png');
+  background-image: url('/img/SaMS.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

@@ -1,0 +1,134 @@
+@model LoginViewModel
+
+
+<!--<div class="video-background">
+    <video autoplay muted loop id="bgVideo">
+        <source src="~/img/SaMS.mp4" type="video/mp4">
+        Tu navegador no soporta la reproducción de videos.
+    </video>
+</div>
+
+<div>
+    <a href="/Login/Logout" class="nav-link text-dark"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
+</div>
+
+<div class="form-control w-50 mx-auto login-container">
+    <form action="/Login/Autenticacion" method="post">
+        <p id="mensajeError"></p>
+        <div class="mb-3">
+            <label for="Email" class="form-label">Email</label>
+            <input type="email" name="Email" id="Email" class="form-control"></input>
+        </div>
+        <div class="mb-3">
+            <label for="Password" class="form-label">Password</label>
+            <input type="password" name="Password" id="Password" class="form-control"></input>
+        </div>
+        <div class="d-flex justify-content-around">
+            <button type="button" id="botonIngresar" class="btn btn-success">Ingresar</button>
+            <div class="d-flex">
+                <div class="form-text">¿No tienes cuenta?</div>
+                <a href="/Usuario/Crear" class="btn btn-primary">Registrar</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    let inputEmail = document.querySelector("#Email");
+    inputEmail.addEventListener("focus", () => {
+        document.querySelector("#mensajeError").style.display = "none";
+    });
+
+    let botonIngresar = document.querySelector("#botonIngresar");
+    botonIngresar.addEventListener("click", () => {
+        let Email = document.querySelector("#Email");
+        let Password = document.querySelector("#Password");
+        axios.post("http://localhost:5203/Login/Autenticacion", {
+            Email: Email.value, Password: Password.value
+        })
+        .then(res => {
+            if (res.data.ok) {
+                window.location.href = "/Home/Index";
+            } else {
+                let mensajeError = document.querySelector("#mensajeError");
+                mensajeError.style.display = "inline";
+                mensajeError.innerHTML = res.data.mensaje;
+                mensajeError.style.color = "red";
+            }
+        })
+        .catch(err => console.log(err));
+    });
+</script>-->
+
+<div class="video-background">
+    <video autoplay muted loop id="bgVideo">
+        <source src="~/img/SaMS.mp4" type="video/mp4">
+        Tu navegador no soporta la reproducción de videos.
+    </video>
+</div>
+
+<!-- Ancla de Logout con clase personalizada -->
+<div class="anchor-container">
+    <a href="/Login/Logout" class="nav-link logout-link text-dark">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
+    </a>
+</div>
+
+<!-- Contenedor del formulario, inicialmente oculto -->
+<div id="loginForm" class="form-control w-50 mx-auto login-container" style="display: none;">
+    <form action="/Login/Autenticacion" method="post">
+        <p id="mensajeError"></p>
+        <div class="mb-3">
+            <label for="Email" class="form-label">Email</label>
+            <input type="email" name="Email" id="Email" class="form-control"></input>
+        </div>
+        <div class="mb-3">
+            <label for="Password" class="form-label">Password</label>
+            <input type="password" name="Password" id="Password" class="form-control"></input>
+        </div>
+        <div class="d-flex justify-content-around">
+            <button type="button" id="botonIngresar" class="btn btn-success">Ingresar</button>
+            <div class="d-flex">
+                <div class="form-text">¿No tienes cuenta?</div>
+                <a href="/Usuario/Crear" class="btn btn-primary">Registrar</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    // Mostrar el formulario al hacer click en el botón de Logout
+    let logoutLink = document.querySelector(".logout-link");
+    logoutLink.addEventListener("click", function(event) {
+        event.preventDefault(); // Evita que el enlace realice la redirección
+        document.getElementById("loginForm").style.display = "block"; // Muestra el formulario
+    });
+
+    // Ocultar mensaje de error al hacer foco en el input del Email
+    let inputEmail = document.querySelector("#Email");
+    inputEmail.addEventListener("focus", () => {
+        document.querySelector("#mensajeError").style.display = "none";
+    });
+
+    // Funcionalidad del botón de Ingresar
+    let botonIngresar = document.querySelector("#botonIngresar");
+    botonIngresar.addEventListener("click", () => {
+        let Email = document.querySelector("#Email");
+        let Password = document.querySelector("#Password");
+        axios.post("http://localhost:5203/Login/Autenticacion", {
+            Email: Email.value, Password: Password.value
+        })
+        .then(res => {
+            if (res.data.ok) {
+                window.location.href = "/Home/Index";
+            } else {
+                let mensajeError = document.querySelector("#mensajeError");
+                mensajeError.style.display = "inline";
+                mensajeError.innerHTML = res.data.mensaje;
+                mensajeError.style.color = "red";
+            }
+        })
+        .catch(err => console.log(err));
+    });
+</script>
+

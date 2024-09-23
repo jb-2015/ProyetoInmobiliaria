@@ -20,9 +20,10 @@ public class Inmueble{
     public Boolean Mascotas {get; set;}
     public Boolean Estado {get; set;}
     public string UrlImagen {get; set;}
-    public string TipoYDireccion {
-        get {
-            return $"{tipo.Observacion}, {direccion.DireccionCompleta} ";
-        }
-    }
+    // public string? TipoYDireccion {
+    //     get {
+    //         return $"{tipo.Observacion}, {direccion.DireccionCompleta} ";
+    //     };
+    //     set;
+    // }
 }
