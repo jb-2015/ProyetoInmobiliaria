@@ -20,20 +20,22 @@ public class PropietarioController : Controller{
     }
 
     public IActionResult Editar(int Id){
-        Propietario propietario = repo.Obtener(Id);
-        if(propietario != null){
-            return View(propietario);
+        if(Id == 0){
+            return View();
+        }else{
+            return View(repo.Obtener(Id));
         }
-        return RedirectToAction("Index", "Home");
     }
 
 
     public IActionResult Detalle(int id){
-        Propietario propietario = repo.Obtener(id);
-        if(propietario != null){
-            return View(propietario);
+        Propietario propietario = null;
+        try{
+            propietario = repo.Obtener(id);
+        }catch (System.Exception){
+            _logger.LogInformation("Propietario/Detalle/Error al obtener el propietario.");
         }
-        return RedirectToAction("Index", "Home");
+        return View(propietario);
     }
 
     public IActionResult Crear(){
@@ -42,10 +44,13 @@ public class PropietarioController : Controller{
 
     [HttpPost]
     public IActionResult Alta(int Id){
+        Propietario p = null; 
         try{
-            Propietario p = repo.Obtener(Id);
+            p = repo.Obtener(Id);
+            _logger.LogInformation("Estado: "+p.Estado);            
             p.Estado = true;
-            int filasAfectadas = repo.Modificar(p);
+            _logger.LogInformation("Estado: "+p.Estado);            
+            repo.Modificar(p);
         }catch (System.Exception){
             _logger.LogInformation("Propietario/Alta/ error al dar de alta al propietario");            
         }
