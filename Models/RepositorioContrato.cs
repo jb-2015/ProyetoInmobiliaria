@@ -242,5 +242,40 @@ public class RepositorioContrato: RepositorioBase{
         return contratos;
     }
 
+    public List<Contrato> ListarPorVigencia(DateTime hoy, DateTime tantosDias){
+        Console.WriteLine($"Fecha de hoy: {hoy}, Fecha de tantos dias: {tantosDias}");
+        List<Contrato> contratos = new List<Contrato>(); 
+        using(MySqlConnection connection = new MySqlConnection(ConnectionString)){
+            connection.Open();
+            string query = "SELECT * FROM contrato c WHERE c.fechaFin <= @tantosDias AND c.fechaFin >= @hoy;";
+            using(MySqlCommand command = new MySqlCommand(query, connection)){
+                command.Parameters.AddWithValue("@tantosDias", tantosDias);
+                command.Parameters.AddWithValue("@hoy", hoy);
+                using(MySqlDataReader reader = command.ExecuteReader()){
+                    while(reader.Read()){
+                        Inquilino inquilino = repoInquilino.Obtener(reader.GetInt32("idInquilino"));
+                        Inmueble inmueble = repoInmueble.Obtener(reader.GetInt32("idInmueble"));
+                        Contrato contrato = new Contrato{
+                            IdContrato = reader.GetInt32("idContrato"),
+                            Monto = reader.GetDouble("monto"),
+                            FechaInicio = reader.GetDateTime("fechaInicio"),
+                            FechaFin = reader.GetDateTime("fechaFin"),
+                            IdInmueble = reader.GetInt32("idInmueble"),
+                            IdInquilino = reader.GetInt32("idInquilino"),
+                            inmueble = inmueble, 
+                            inquilino = inquilino,
+                            FechaAnulacion = reader.GetDateTime("fechaAnulacion"),
+                            Estado = reader.GetBoolean("estado")
+                        };
+                        contratos.Add(contrato);
+                    }
+                }
+            }
+        }
+        return contratos;
+    }
+
+    
+
 }
 

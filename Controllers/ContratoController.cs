@@ -17,14 +17,12 @@ public class ContratoController : Controller{
         _repoInquilino = new RepositorioInquilino();
     }
 
-  // para ver vista de detalles //creo que no se hace un detalleController, manejamos desde aqui
     public IActionResult Detalles(int id){
         var contrato = _repo.Obtener(id);
-        if (contrato == null){
-            _logger.LogWarning("No se encontro el contrato con el id: {Id}", id);
-            return NotFound(); //  me devuelve error si no hay contrato 
+        if (contrato != null){
+            return View(contrato); // muestra a la vista
         }
-        return View(contrato); // muestra a la vista
+        return RedirectToAction("Index", "Home");
     }
 
     public IActionResult Index(){
@@ -48,6 +46,12 @@ public class ContratoController : Controller{
         List<Contrato>contratos = _repo.ListarPorFechas(fechaInicio, fechaFin);
         return Json(contratos);
     }
+    
+    //filtros 
+    public JsonResult GetVigentesDentroDe(DateTime hoy, DateTime tantosDias){
+        List<Contrato>contratos = _repo.ListarPorVigencia(hoy, tantosDias);
+        return Json(contratos);
+    }
 
     
 
@@ -66,21 +70,21 @@ public class ContratoController : Controller{
 
     [HttpPost]
     public IActionResult Guardar(ContratoViewModel cvm){
-        try{
-            if(cvm.Contrato.IdContrato == 0){
-                int IdUsuario = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-                int IdCreado = _repo.Crear(cvm.Contrato, IdUsuario);
-                if(IdCreado > 0){
-                    _logger.LogInformation("Se ha creado un nuevo contrato: {IdCreado}", IdCreado);
-                    return RedirectToAction("Detalles", "Inmueble", new {id = cvm.Contrato.IdInmueble});
-                }
+            if(cvm.Contrato.FechaInicio >= cvm.Contrato.FechaFin){
+                return RedirectToAction("Crear", "Contrato");
             }else{
-                _repo.Modificar(cvm.Contrato);
+                if(cvm.Contrato.IdContrato == 0){
+                    int IdUsuario = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                    int IdCreado = _repo.Crear(cvm.Contrato, IdUsuario);
+                    if(IdCreado > 0){
+                        _logger.LogInformation("Se ha creado un nuevo contrato: {IdCreado}", IdCreado);
+                        return RedirectToAction("Detalles", "Inmueble", new {id = cvm.Contrato.IdInmueble});
+                    }
+                }else{
+                    _repo.Modificar(cvm.Contrato);
+                }
             }
-        }catch (Exception ex){
-            _logger.LogError(ex, "Ha ocurrido un error al tratar de guardar el contrato", cvm.Contrato.IdContrato);
-        }
-        return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home");
     }
 
     [HttpPost]

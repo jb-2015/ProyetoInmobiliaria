@@ -8,13 +8,12 @@ contratoSelect.addEventListener("change", () => {
     let idContrato = contratoSelect.selectedOptions[0].id;
     llenarTablaPagos(idContrato);
 })
-let tablaPagos = document.querySelector("#tablaPagos");
 const llenarTablaPagos = (idContrato) => {
-    axios(`http://localhost:5203/Pago/GetPorContrato/`, {params:{idContrato}})
+    let tablaPagos = document.querySelector("#tablaPagos");
+    axios(`http://localhost:5203/Pago/GetPorContrato`, {params:{idContrato}})
     .then(res => {  
         tablaPagos.innerHTML = "";
         let maqueta = "";
-        console.log("raw");
         for(let p of res.data){
             let estado = "";
             let acciones = `
@@ -41,6 +40,11 @@ const llenarTablaPagos = (idContrato) => {
                 <td>${p.detalle}</td>
                 ${estado}
             </tr>`;
+        }
+        if(res.data.length < 1){
+            maqueta += `<tr>
+                    <td style="color: red">NO EXISTEN PAGOS TODAVÍA</td>
+                </tr>`;
         }
         tablaPagos.innerHTML = maqueta;
     }).catch(err => console.log(err));

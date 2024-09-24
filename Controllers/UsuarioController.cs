@@ -49,16 +49,11 @@ public class UsuarioController: Controller{
         if(archivo!=null){
             var fileName= Path.GetFileName(archivo.FileName);
             var filePath = Path.Combine(Directory.GetCurrentDirectory(),"wwwroot/img/Avatar",fileName);
-            _logger.LogInformation(filePath);
-            using (var fileStream = new FileStream(filePath,FileMode.Create))
-            {
+            using (var fileStream = new FileStream(filePath,FileMode.Create)){
                 archivo.CopyTo(fileStream);
             }
             usuario.Avatar = "/img/Avatar/"+fileName;
         }
-        _logger.LogInformation(usuario.Avatar);
-
-
         RepositorioUsuario repositorio = new RepositorioUsuario();
         repositorio.Guardar(usuario);
         return RedirectToAction( "Index", "Login");

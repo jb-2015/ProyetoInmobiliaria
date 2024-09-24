@@ -46,21 +46,19 @@ public class InquilinoController : Controller{
 
 
     public IActionResult Detalle(int id){
-        Inquilino inquilino = null;
-        try{
-            inquilino = repo.Obtener(id);
-        }catch (System.Exception){
-            _logger.LogInformation("inquilino/Detalle/Error al obtener el inquilino.");
+        Inquilino inquilino = repo.Obtener(id);
+        if(inquilino != null){
+            return View(inquilino);
         }
-        return View(inquilino);
+        return RedirectToAction("Index", "Home");
     }
 
     public IActionResult Editar(int Id){
-        if(Id == 0){
-            return View();
-        }else{
+        Inquilino inquilino = repo.Obtener(Id);
+        if(inquilino != null){
             return View(repo.Obtener(Id));
         }
+        return RedirectToAction("Index", "Home");
     }
 
     public IActionResult Crear(){

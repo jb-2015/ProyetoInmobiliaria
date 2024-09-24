@@ -14,50 +14,51 @@
         }
     </select>
 </div>
-@if(Model.Pagos.Count > 0){
-    <table class="table table-even-columns table-striped table-hover table-bordered">
-        <thead class="table-dark">
-            <tr>
-                <th>Contrato</th>
-                <th>FechaPago</th>
-                <th>Importe</th>
-                <th>NumeroPago</th>
-                <th>Detalle</th>
-                <th>Estado</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody id="tablaPagos">
-                @foreach (var item in Model.Pagos){
-                    <tr>
-                        <td>@item.contrato.inmueble.propietario.Apellido - @item.contrato.inquilino.Apellido</td>
-                        <td>@item.FechaPago.ToString("dd/MM/yyyy")</td>
-                        <td>$@item.Importe</td>
-                        <td>@item.NumeroPago</td>
-                        <td>@item.Detalle</td>
-                        @if(!item.Estado){
-                            <td>Anulado</td>
-                            <td>---</td>
-                        }else{
-                            <td>Pagado</td>
-                            <td class="d-flex align-items-center w-auto">
-                                <form action="/Pago/Borrar" class="mx-1" method="post">
-                                    <input type="hidden" name="Id" value="@item.IdPago">
-                                    <input type="hidden" name="IdContrato" value="@item.IdContrato">
-                                    <button type="submit" class="btn btn-borrarbt">Anular</button>
-                                </form>
-                                <a href="/Pago/Editar/@item.IdPago" class="btn btn-editbt mx-1">
-                                    <i class="fa-solid fa-pen-to-square"></i>
-                                </a>
-                            </td>
-                        }
-                    </tr>
-                }
-        </tbody>
-    </table>
-}else{
-    <h5 style="color: red; padding: 10px;">NO EXISTEN PAGOS TODAVÍA</h5>
-}
+<table class="table table-even-columns table-striped table-hover table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Contrato</th>
+            <th>FechaPago</th>
+            <th>Importe</th>
+            <th>NumeroPago</th>
+            <th>Detalle</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody id="tablaPagos">
+            @foreach (var item in Model.Pagos){
+                <tr>
+                    <td>@item.contrato.inmueble.propietario.Apellido - @item.contrato.inquilino.Apellido</td>
+                    <td>@item.FechaPago.ToString("dd/MM/yyyy")</td>
+                    <td>$@item.Importe</td>
+                    <td>@item.NumeroPago</td>
+                    <td>@item.Detalle</td>
+                    @if(!item.Estado){
+                        <td>Anulado</td>
+                        <td>---</td>
+                    }else{
+                        <td>Pagado</td>
+                        <td class="d-flex align-items-center w-auto">
+                            <form action="/Pago/Borrar" class="mx-1" method="post">
+                                <input type="hidden" name="Id" value="@item.IdPago">
+                                <input type="hidden" name="IdContrato" value="@item.IdContrato">
+                                <button type="submit" class="btn btn-borrarbt">Anular</button>
+                            </form>
+                            <a href="/Pago/Editar/@item.IdPago" class="btn btn-editbt mx-1">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </a>
+                        </td>
+                    }
+                </tr>
+            }
+            @if(Model.Pagos.Count < 1){
+                <tr>
+                    <td style="color: red">NO EXISTEN PAGOS TODAVÍA</td>
+                </tr>
+            }
+    </tbody>
+</table>
 <button type="button" class="btn btn-primary" id="botonNuevoPago">NUEVO PAGO</button>
 @section Scripts {
     <script src="~/js/pagoScript.js"></script>

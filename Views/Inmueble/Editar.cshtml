@@ -12,6 +12,7 @@
             <img src="@Model.Inmueble.UrlImagen" alt="" class="img-m">
             <form asp-action="Guardar" method="post">
                 <input type="hidden" asp-for="Inmueble.IdInmueble" value="@Model.Inmueble.IdInmueble">
+                <input type="hidden" asp-for="Inmueble.Estado" value="@Model.Inmueble.Estado">
                 @* <input type="hidden" asp-for="Inmueble.TipoYDireccion" > *@
                 <div class="form-group">
                     <label asp-for="Inmueble.UrlImagen">URL Imagen</label>

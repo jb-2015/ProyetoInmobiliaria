@@ -45,6 +45,7 @@ RepositorioDireccion repoDire = new RepositorioDireccion();
     // Modificar
     public int Modificar(Inmueble inmueble){
         int filasAfectadas = 0;
+        Console.WriteLine(@$"Estado del inmueble {inmueble.Estado} idDelInmueble {inmueble.IdInmueble}");
         using(MySqlConnection connection = new MySqlConnection(ConnectionString)){
             connection.Open();
             string query = "UPDATE inmueble SET idPropietario = @IdPropietario, idDireccion = @IdDireccion,"+

@@ -27,15 +27,15 @@ let dias60 = document.querySelector("#dias60");
 let dias90 = document.querySelector("#dias90");
 let filtroContratosPorDias = document.querySelector(".filtroContratosPorDias");
 filtroContratosPorDias.addEventListener("change", (e) => {
-    let fechaInicio = new Date("1900-01-01");
-    let fechaFin = new Date();
+    let hoy = new Date();
+    let tantosDias = new Date();
     if(e.target.matches("#dias30") || e.target.matches("#dias60") || e.target.matches("#dias90")){
         switch(parseInt(e.target.value)){
-            case 1: fechaFin.setDate(fechaFin.getDate() + 30); break;
-            case 2: fechaFin.setDate(fechaFin.getDate() + 30); break;
-            case 3: fechaFin.setDate(fechaFin.getDate() + 30); break;
+            case 1: tantosDias.setDate(tantosDias.getDate() + 30); break;
+            case 2: tantosDias.setDate(tantosDias.getDate() + 60); break;
+            case 3: tantosDias.setDate(tantosDias.getDate() + 90); break;
         }
-        axios("http://localhost:5203/Contrato/GetVigentesPorFechas", {params:{fechaInicio, fechaFin}})
+        axios("http://localhost:5203/Contrato/GetVigentesDentroDe", {params:{hoy, tantosDias}})
         .then(res => llenarTablaContratos(res.data))
         .catch(err => console.log(err));
     }
