@@ -42,6 +42,7 @@ public class PropietarioController : Controller{
         return View(); // Devuelve la vista para crear un nuevo propietario
     }
 
+    [Authorize(Roles = "Administrador")]
     [HttpPost]
     public IActionResult Alta(int Id){
         Propietario p = null; 
@@ -70,6 +71,8 @@ public class PropietarioController : Controller{
         return RedirectToAction("Index");
     }
 
+
+    [Authorize(Roles = "Administrador")]
     [HttpPost]
     public IActionResult Borrar(int Id){
         repo.Eliminar(Id);

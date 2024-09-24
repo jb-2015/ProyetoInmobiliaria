@@ -61,6 +61,8 @@ public class PagoController:Controller{
         }
         return RedirectToAction("Index", "Pago", new { id = pago.IdContrato });
     }
+    
+    [Authorize(Roles = "Administrador")]
     [HttpPost]
     public IActionResult Borrar(int Id, int IdContrato){
         int filasAfectadas = repo.Eliminar(Id);

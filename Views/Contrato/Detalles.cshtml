@@ -1,0 +1,57 @@
+@model Contrato
+
+<h1>Detalles del contrato</h1>
+<input type="hidden" value="@Model.IdContrato" id="inputIdContrato">
+<input type="hidden" value="@Model.Monto" id="montoTotal">
+<div class="d-flex my-5">
+    <a style="margin-right: 30px;" href="/Propietario/Detalle/@Model.inmueble.IdPropietario">
+        <h5 class="card-title">Propietario</h5>
+        <div class="cardInmueble">
+            <h2>Dni: @Model.inmueble.propietario.Dni</h2>
+            <p>Apellido: @Model.inmueble.propietario.Apellido</p>
+            <p>Nombre: @Model.inmueble.propietario.Nombre</p>
+        </div>
+    </a>
+    <a style="margin-right: 30px;" href="/Inquilino/Detalle/@Model.IdInquilino">
+        <h5 class="card-title">Inquilino</h5>
+        <div class="cardInmueble">
+            <h2>Dni: @Model.inquilino.Dni</h2>
+            <p>Apellido: @Model.inquilino.Apellido</p>
+            <p>Nombre: @Model.inquilino.Nombre</p>
+        </div>
+    </a>
+    <a style="margin-right: 30px;" href="/Inmueble/Detalles/@Model.IdInmueble">
+        <h5 class="card-title">Inmueble</h5>
+        <div class="cardInmueble">
+            <h2>Descripcion: @Model.inmueble.Descripcion</h2>
+            <p>Dirección: @Model.inmueble.direccion.Calle @Model.inmueble.direccion.Altura</p>
+            <p>Ciudad: @Model.inmueble.direccion.Ciudad</p>
+        </div>
+    </a>
+</div>
+<div>
+    <h3>Fecha de inicio</h3>
+    <input type="date" hidden value="@Model.FechaInicio.ToString("d")" id="fechaInicioContrato">
+    <p>@Model.FechaInicio</p>
+</div>
+<div>
+    <h3>Fecha de finalización</h3>
+    <input type="date" hidden value="@Model.FechaFin.ToString("d")" id="fechaFinContrato">
+    <p>@Model.FechaFin</p>
+</div>
+<button type="button" class="btn btn-danger" id="botonFinalizarContrato">Terminar contrato</button>
+@* <table>
+    <thead>
+        <tr>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td></td>
+        </tr>
+    </tbody>
+</table> *@
+@section Scripts {
+    <script src="~/js/detalleContratoScript.js"></script>
+}

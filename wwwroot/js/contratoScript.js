@@ -41,9 +41,6 @@ filtroContratosPorDias.addEventListener("change", (e) => {
     }
 })
 
-//validacion de fechas
-
-
 //metodo llenar tabla 
 let tablaContratos = document.querySelector("#tablaContratos");
 const llenarTablaContratos = (contratos, IdInmueble) => {
@@ -51,6 +48,7 @@ const llenarTablaContratos = (contratos, IdInmueble) => {
     let maqueta = "";
     if(contratos.length > 0){
         for(let c of contratos){
+            console.log(c);
             maqueta += 
             `<tr>
                 <td><a href="/Inquilino/Detalle/${c.idInquilino}">${c.inquilino.nombre} ${c.inquilino.apellido}</a></td>
@@ -58,9 +56,14 @@ const llenarTablaContratos = (contratos, IdInmueble) => {
                 <td>$${c.monto}</td>
                 <td>${(new Date(c.fechaInicio)).toLocaleDateString('en-GB')}</td>
                 <td>${(new Date(c.fechaFin)).toLocaleDateString('en-GB')}</td>
-                <td>${(c.fechaAnulacion.Millisecond > 0? (new Date(c.fechaAnulacion)).toLocaleDateString('en-GB') : "---")}</td>
-                <td><a href="/Pago/Index/${c.IdContrato}" class="btn btn-primary">Pagos</a></td>
-            </tr>
+                <td>
+                ${c.fechaAnulacion === '0001-01-01T00:00:00' ? '---' : new Date(c.fechaAnulacion).toLocaleDateString('en-GB')}
+                </td>
+                <td><a href="/Pago/Index/${c.idContrato}" class="btn btn-primary">Pagos</a></td>
+                <td><a href="/Contrato/Detalles/${c.idContrato}" class="btn btn-editbt"><i class="fa-solid fa-list"></i></a>
+                ${c.fechaAnulacion === '0001-01-01T00:00:00'?'':`<a href="/Contrato/Crear/${IdInmueble}" class="btn btn-detallebt">Renovar</a>`}
+                </td>
+                </tr>
             `;
         }
         maqueta += `<a href="/Contrato/Crear/${IdInmueble}" class="btn btn-primary">Nuevo contrato</a>`;

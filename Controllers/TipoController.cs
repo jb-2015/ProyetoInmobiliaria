@@ -60,7 +60,8 @@ public class TipoController: Controller{
         }
         return View("Crear", tipo);
     }
-
+    
+    [Authorize(Roles = "Administrador")]
     [HttpPost]
     public IActionResult Borrar(int id)
     {

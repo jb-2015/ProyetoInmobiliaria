@@ -27,7 +27,6 @@ filtrarPorDni.addEventListener("click", (e) => {
 })
 
 
-
 //Filtrado por apellido
 let buscarPropietarioApellido = document.querySelector("#buscarPropietarioApellido");
 buscarPropietarioApellido.addEventListener("input", (e) => {

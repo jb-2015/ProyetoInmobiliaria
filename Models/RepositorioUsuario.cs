@@ -131,53 +131,16 @@ public RepositorioUsuario(): base(){
     }
 
     // eliminar un usuario
-    public int Eliminar(int id)
-    {
+    public int Eliminar(int id){
         int filasAfectadas = 0;
-        using (MySqlConnection connection = new MySqlConnection(ConnectionString))
-        {
+        using (MySqlConnection connection = new MySqlConnection(ConnectionString)){
             connection.Open();
-            string query = "UPDATE usuario SET estado = 0 WHERE id = @IdUsuario"; 
-
-            using (MySqlCommand command = new MySqlCommand(query, connection))
-            {
+            string query = "UPDATE usuario SET estado = false WHERE idUsuario = @IdUsuario"; 
+            using (MySqlCommand command = new MySqlCommand(query, connection)){
                 command.Parameters.AddWithValue("@IdUsuario", id);
                 filasAfectadas = command.ExecuteNonQuery();
             }
         }
         return filasAfectadas;
     }
-    public Usuario ObtenerPorId(int id)
-        {
-            Usuario usuario = null;
-            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
-            {
-                connection.Open();
-                string query = "SELECT * FROM usuario WHERE idUsuario = @IdUsuario AND estado = 1";
-                using (MySqlCommand command = new MySqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@IdUsuario", id);
-                    using (MySqlDataReader reader = command.ExecuteReader())
-                    {
-                        if (reader.Read())
-                        {
-                            Console.WriteLine(reader.GetString("nombre"));
-                            usuario = new Usuario
-                            {
-                                IdUsuario = reader.GetInt32("id"),
-                                Email = reader.GetString("email"),
-                                Password = reader.GetString("password"),
-                                Rol = reader.GetString("rol"),
-                                Avatar = reader.IsDBNull(reader.GetOrdinal("avatar")) ? null : reader.GetString("avatar"),
-                                Nombre = reader.GetString("nombre"),
-                                Apellido = reader.GetString("apellido"),
-                                Estado = reader.GetBoolean("estado")
-                            };
-                        }
-                    }
-                }
-            }
-            return usuario;
-        }
-
 }

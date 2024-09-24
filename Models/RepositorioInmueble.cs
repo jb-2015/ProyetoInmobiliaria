@@ -110,6 +110,47 @@ RepositorioDireccion repoDire = new RepositorioDireccion();
         }
         return inmuebles;
     }
+    // Listar Por Tipo Y Fechas
+    public List<Inmueble> ListarPorTipoYFechas(int idTipo, DateTime fechaDesde, DateTime fechaHasta){
+        List<Inmueble> inmuebles = new List<Inmueble>();
+        using(MySqlConnection connection = new MySqlConnection(ConnectionString)){
+            connection.Open();
+            string query = "SELECT i.* FROM inmueble i LEFT JOIN contrato c ON i.idInmueble = c.idInmueble WHERE i.idTipo = @idTipo AND i.estado = true AND (c.fechaInicio IS NULL OR c.fechaFin IS NULL OR (c.fechaInicio > @fechaHasta OR c.fechaFin < @fechaDesde))";
+            using(MySqlCommand command = new MySqlCommand(query, connection)){
+                command.Parameters.AddWithValue("@idTipo", idTipo);
+                command.Parameters.AddWithValue("@fechaDesde", fechaDesde);
+                command.Parameters.AddWithValue("@fechaHasta", fechaHasta);
+                using(MySqlDataReader reader = command.ExecuteReader()){
+                    while(reader.Read()){
+                        Propietario p = repoPropie.Obtener(reader.GetInt32("IdPropietario"));
+                        Direccion d = repoDire.Obtener(reader.GetInt32("IdDireccion"));
+                        Tipo t = repoTipo.Obtener(reader.GetInt32("IdTipo"));
+                        Inmueble inmueble = new Inmueble{
+                            IdPropietario= p.IdPropietario,
+                            IdDireccion= d.IdDireccion,
+                            IdTipo = t.IdTipo,
+                            IdInmueble = reader.GetInt32("IdInmueble"),
+                            propietario = p,
+                            direccion = d,
+                            tipo = t,
+                            Metros2 = reader.GetString("metros2"),
+                            CantidadAmbientes = reader.GetInt32("cantidadAmbientes"),
+                            Disponible = reader.GetBoolean("disponible"),
+                            Precio = reader.GetDecimal("precio"),
+                            Descripcion = reader.GetString("descripcion"),
+                            Cochera = reader.GetBoolean("cochera"),
+                            Piscina = reader.GetBoolean("piscina"),
+                            Mascotas = reader.GetBoolean("mascotas"),
+                            Estado = reader.GetBoolean("estado"),
+                            UrlImagen= reader.GetString("UrlImagen")
+                            };
+                        inmuebles.Add(inmueble);
+                    }
+                }
+            }
+        }
+        return inmuebles;
+    }
 
     public List<Inmueble> ListarNoDisponibles(){
         List<Inmueble> inmuebles = new List<Inmueble>();

@@ -501,3 +501,23 @@ a{
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
+
+/*ESTILOS NOMBRE PERFIL*/
+.fotoMiniatura{
+  width: 37px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+
+}
+.nombreUsuario{
+  display: flex;
+  flex-direction: row;
+  gap:5px;
+}
+#navbarDropdown{
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}

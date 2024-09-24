@@ -25,7 +25,7 @@
                     <a href="@Url.Action("Editar", "Usuario", new { id = u.IdUsuario })" class="btn btn-editbt mx-1">
                         <i class="fa-solid fa-pen-to-square"></i>
                     </a>
-                    <form asp-action="Borrar" class="mx-1" method="post" style="display:inline;">
+                    <form action="/Usuario/Borrar" class="mx-1" method="post" style="display:inline;">
                         <input type="hidden" name="idUsuario" value="@u.IdUsuario" />
                         <button type="submit" class="btn btn-borrarbt" title="Borrar">
                             <i class="fa-solid fa-trash"></i>

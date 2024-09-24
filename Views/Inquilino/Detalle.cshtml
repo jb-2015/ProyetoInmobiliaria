@@ -24,20 +24,22 @@
                 <a class="btn btn-editbt mx-1" href="/Inquilino/Editar/@Model.IdInquilino">
                     <i class="fa-solid fa-pen-to-square"></i>
                 </a>
-                @if(Model.Estado){
-                    <form action="/Inquilino/Borrar" class="mx-1" method="post">
-                        <input type="hidden" name="id" value="@Model.IdInquilino">
-                        <button type="submit" class="btn btn-borrarbt">
-                                <i class="fa-solid fa-trash"></i>
-                        </button>
-                    </form>
-                }else{
-                    <form action="/Inquilino/Alta" class="mx-1" method="post">
-                        <input type="hidden" name="id" value="@Model.IdInquilino">
-                        <button type="submit" class="btn btn-exitobt">
-                            <i class="fa-solid fa-circle-check"></i>
-                        </button>
-                    </form>
+                @if(User.IsInRole("Administrador")){
+                    @if(Model.Estado){
+                        <form action="/Inquilino/Borrar" class="mx-1" method="post">
+                            <input type="hidden" name="id" value="@Model.IdInquilino">
+                            <button type="submit" class="btn btn-borrarbt">
+                                    <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </form>
+                    }else{
+                        <form action="/Inquilino/Alta" class="mx-1" method="post">
+                            <input type="hidden" name="id" value="@Model.IdInquilino">
+                            <button type="submit" class="btn btn-exitobt">
+                                <i class="fa-solid fa-circle-check"></i>
+                            </button>
+                        </form>
+                    }
                 }
             </td>
         </tr>

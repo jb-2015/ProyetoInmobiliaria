@@ -36,6 +36,7 @@ public class RepositorioLogin : RepositorioBase
                             Email = reader["email"].ToString(),
                             Rol = reader["rol"].ToString(),
                             Apellido= reader["apellido"].ToString(),
+                            Avatar = reader.GetString("avatar")
                             
                         };
                     }

@@ -10,32 +10,50 @@
                 <input type="hidden" name="Password" value="@Model.Password">
                 <div class="form-group mb-3">
                     <label asp-for="Nombre" class="form-label"></label>
-                    <input asp-for="Nombre" class="form-control" />
+                    @if(User.IsInRole("Administrador")){
+                        <input asp-for="Nombre" class="form-control" />
+                    }else{
+                        <input asp-for="Nombre" disabled class="form-control" />
+                    }
                     <span asp-validation-for="Nombre" class="text-danger"></span>
                 </div>
                 <div class="form-group mb-3">
                     <label asp-for="Apellido" class="form-label"></label>
-                    <input asp-for="Apellido" class="form-control" />
+                    @if(User.IsInRole("Administrador")){
+                        <input asp-for="Apellido" class="form-control" />
+                    }else{
+                        <input asp-for="Apellido" disabled class="form-control" />
+                    }
                     <span asp-validation-for="Apellido" class="text-danger"></span>
                 </div>
                 <div class="form-group mb-3">
                     <label asp-for="Email" class="form-label"></label>
-                    <input asp-for="Email" class="form-control" />
+                    @if(User.IsInRole("Administrador")){
+                        <input asp-for="Email" class="form-control" />
+                    }else{
+                        <input asp-for="Email" disabled class="form-control" />
+                    }
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
                 <div class="form-group mb-3">
                     <label asp-for="Rol" class="form-label"></label>
-                    <select asp-for="Rol" class="form-control">
-                        <option value="Administrador">Administrador</option>
-                        <option value="Empleado">Empleado</option>
-                    </select>
+                    @if(User.IsInRole("Administrador")){
+                        <select asp-for="Rol" class="form-control">
+                            <option value="Administrador">Administrador</option>
+                            <option value="Empleado">Empleado</option>
+                        </select>
+                    }else{
+                        <input class="form-control" disabled value="@Model.Rol">
+                    }
                 </div>
                     <div class="form-group mb-3">
                     <label for="archivo" class="form-label">Avatar</label>
                     <img src="@Model.Avatar" alt="Avatar" class="img-fluid">
                     <input type="file" class="btn btn-editbt" name="archivo" id="inputFile" style="display: none;">
                     <button type="button" class="btn btn-editbt" id="editarAvatar">Editar Avatar</button>
-                    <button type="button" class="btn btn-borrarbt" id="borrarAvatar">Borrar Avatar</button>
+                    @if(User.IsInRole("Administrador")){
+                        <button type="button" class="btn btn-borrarbt" id="borrarAvatar">Borrar Avatar</button>
+                    }
                 </div>
                 <button type="submit" class="btn btn-primary">Guardar</button>                
             </form>

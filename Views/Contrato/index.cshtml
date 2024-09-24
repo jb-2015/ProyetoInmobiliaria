@@ -50,6 +50,7 @@
             <th>Fecha de Fin</th>
             <th>Fecha de Anulacion</th>
             <th>Pagos</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody id="tablaContratos">
@@ -60,8 +61,9 @@
                 <td>$@c.Monto</td>
                 <td>@c.FechaInicio.ToString("dd/MM/yyyy")</td>
                 <td>@c.FechaFin.ToString("dd/MM/yyyy")</td>
-                <td>@(c.FechaAnulacion.Millisecond > 0? c.FechaAnulacion.ToString("DD/MM/yyyy") : "---")</td>
+                <td>@(c.FechaAnulacion != DateTime.MinValue ? c.FechaAnulacion.ToString("dd/MM/yyyy") : "---")</td>
                 <td><a href="/Pago/Index/@c.IdContrato" class="btn btn-primary">Pagos</a></td>
+                <td><a href="/Contrato/Detalles/@c.IdContrato" class="btn btn-editbt"><i class="fa-solid fa-list"></i></a></td>
             </tr>
         }
     </tbody>

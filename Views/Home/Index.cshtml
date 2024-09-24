@@ -1,4 +1,4 @@
-﻿@model List<Inmueble>
+﻿@model InmuebleTipos
 @{
     ViewData["Title"] = "Inmobiliaria Sam's";
 }
@@ -34,18 +34,34 @@
         </button>
     </div>
 </div>
+<div class="d-flex align-items-center mb-3 my-2">
+    <select id="selectTipos" class="form-select me-2">
+        <option disabled hidden selected>Elija un tipo</option>
+        @foreach(var item in Model.Tipos){
+            <option value="@item.IdTipo">@item.Observacion</option>
+        }
+    </select>
+    <div class="d-flex align-items-center me-3">
+        <label for="fechaDesdeInmuebles" class="me-2">Elija Desde</label>
+        <input type="date" id="fechaDesdeInmuebles" class="form-control me-2">
+        <label for="fechaHastaInmuebles" class="me-2">Elija Hasta</label>
+        <input type="date" id="fechaHastaInmuebles" class="form-control me-2">
+    </div>
+    <button type="button" class="btn btn-primary" id="btnFiltrarInmueblesIndex">Buscar</button>
+    <button type="button" class="btn btn-danger" id="limpiarFiltros">Limpiar</button>
+</div>
 <div class="containerInmueble">
-    @foreach(var item in Model){
-
+    @foreach(var item in Model.Inmuebles){
         <a href="@Url.Action("Detalles","Inmueble", new { id = item.IdInmueble})">
             <div class="cardInmueble">
                 <img src="@item.UrlImagen" alt="">
                 <h2>@item.tipo.Observacion</h2>
-
                 <p>@item.Descripcion</p>
             </div>
         </a>
         
     }
 </div>
-
+@section Scripts {
+    <script src="~/js/homeScript.js"></script>
+}

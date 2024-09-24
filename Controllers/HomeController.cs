@@ -12,16 +12,37 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private RepositorioInmueble _repoInmuebles= new RepositorioInmueble();
+    private RepositorioTipo _repoTipos= new RepositorioTipo();
     public HomeController(ILogger<HomeController> logger)
     {
         _logger = logger;
     }
+
+    [HttpGet]
+    public JsonResult EsAdministrador(){
+        bool isAdmin = User.IsInRole("Administrador");
+        return Json(isAdmin);
+    }
     
+    public JsonResult GetInmueblesPorTipoYFechas(int idTipo, DateTime fechaDesde, DateTime fechaHasta){
+        var inmuebles = _repoInmuebles.ListarPorTipoYFechas(idTipo, fechaDesde, fechaHasta);
+        return Json(inmuebles);
+    }
+    public JsonResult GetTodos(){
+        var inmuebles = _repoInmuebles.Listar();
+        return Json(inmuebles);
+    }
+
     public IActionResult Index()
     {
        
         var inmuebles= _repoInmuebles.Listar();
-        return View(inmuebles);
+        var tipos = _repoTipos.Listar();
+        InmuebleTipos it = new InmuebleTipos{
+            Inmuebles = inmuebles,
+            Tipos = tipos
+        };
+        return View(it);
     }
 
     public IActionResult Privacy()

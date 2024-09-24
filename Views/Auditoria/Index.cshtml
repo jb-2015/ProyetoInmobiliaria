@@ -1,0 +1,33 @@
+@model AuditoriaUsuarioViewModel
+<h2>Auditoria</h2>
+<select class="form-select" id="selectUsuariosAuditoria">
+    <option selected hidden disabled>Filtrar por usuario</option>
+    @foreach(var u in Model.Usuarios){
+        <option value="@u.IdUsuario">@u.Apellido @u.Nombre</option>
+    }
+</select>
+<table class="table table-even-columns table-striped table-hover table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Nro</th>
+            <th>Usuario</th>
+            <th>Accion</th>
+            <th>Observacion</th>
+            <th>Fecha y hora</th>
+        </tr>
+    </thead>
+    <tbody id="tablaAuditorias">
+        @foreach(var a in Model.Auditorias){
+            <tr>
+                <td>@a.IdAuditoria</td>
+                <td>@a.Usuario.IdUsuario: @a.Usuario.Apellido @a.Usuario.Nombre</td>
+                <td>@a.Accion</td>
+                <td>@a.Observacion</td>
+                <td>@a.FechaYHora</td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts {
+    <script src="~/js/auditoriaScript.js"></script>
+}

@@ -67,6 +67,7 @@ public class InquilinoController : Controller{
         return View();
     }
 
+    [Authorize(Roles = "Administrador")]
     [HttpPost]
     public IActionResult Alta(int Id){
         Inquilino inquilino = null;
@@ -93,6 +94,7 @@ public class InquilinoController : Controller{
         return RedirectToAction("Index");
     }
 
+    [Authorize(Roles = "Administrador")]
     [HttpPost]
     public IActionResult Borrar(int Id){
         repo.Eliminar(Id);

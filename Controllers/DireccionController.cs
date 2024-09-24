@@ -67,6 +67,7 @@ public class DireccionController : Controller
         return View("Crear", direccion);
     }
 
+    [Authorize(Roles = "Administrador")]
     [HttpPost]
     public IActionResult Borrar(int id)
     {

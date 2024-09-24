@@ -14,6 +14,7 @@ public class UsuarioController: Controller{
             _logger = logger;
         }
         
+    [Authorize(Roles = "Administrador")]
     public IActionResult Index(){
         List<Usuario> usuarios = repo.Listar();
         return View(usuarios);
@@ -43,7 +44,7 @@ public class UsuarioController: Controller{
     public IActionResult Login(){
         return View();
     }
-    [Authorize(Roles = "Administrador")]
+    [AllowAnonymous]
     public IActionResult Guardar(Usuario usuario, IFormFile archivo){
         usuario.Avatar= "/img/Avatar/default.jpg";
         if(archivo!=null){
@@ -63,4 +64,12 @@ public class UsuarioController: Controller{
         repositorio.Guardar(usuario);
         return RedirectToAction( "Index", "Login");
     }   
+
+    [Authorize(Roles = "Administrador")]
+    [HttpPost]
+    public IActionResult Borrar (int IdUsuario){
+        repo.Eliminar(IdUsuario);
+        return RedirectToAction("Index","Usuario");
+    }
+
 }

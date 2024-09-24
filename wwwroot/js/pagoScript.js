@@ -1,9 +1,11 @@
 let contratoSelect = document.querySelector("#contratos");
 let botonNuevoPago = document.querySelector("#botonNuevoPago");
-botonNuevoPago.addEventListener("click", () => {
-    let idContratoSeleccionado = contratoSelect.selectedOptions[0].id;
-    window.location.href = `http://localhost:5203/Pago/Crear/${idContratoSeleccionado}`;
-})
+if(botonNuevoPago){
+    botonNuevoPago.addEventListener("click", () => {
+        let idContratoSeleccionado = contratoSelect.selectedOptions[0].id;
+        window.location.href = `http://localhost:5203/Pago/Crear/${idContratoSeleccionado}`;
+    })
+}
 contratoSelect.addEventListener("change", () => {
     let idContrato = contratoSelect.selectedOptions[0].id;
     llenarTablaPagos(idContrato);

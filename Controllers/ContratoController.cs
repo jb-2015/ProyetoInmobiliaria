@@ -10,11 +10,13 @@ public class ContratoController : Controller{
     private readonly RepositorioContrato _repo;
     private readonly RepositorioInmueble _repoInmueble;
     private readonly RepositorioInquilino _repoInquilino;
+    private readonly RepositorioPago _repoPago;
     public ContratoController(ILogger<ContratoController> logger){
         _logger = logger;
         _repo = new RepositorioContrato();
         _repoInmueble = new RepositorioInmueble();
         _repoInquilino = new RepositorioInquilino();
+        _repoPago = new RepositorioPago();
     }
 
   // para ver vista de detalles //creo que no se hace un detalleController, manejamos desde aqui
@@ -47,6 +49,29 @@ public class ContratoController : Controller{
     public JsonResult GetVigentesPorFechas(DateTime fechaInicio, DateTime fechaFin){
         List<Contrato>contratos = _repo.ListarPorFechas(fechaInicio, fechaFin);
         return Json(contratos);
+    }
+
+    [HttpPost]
+    public JsonResult AnularContrato([FromBody] AnularContratoRequest request){
+        Console.WriteLine($@"IdContrato {request.IdContrato} Monto multa ${request.multa} fechaAnulacion {request.fechaAnulacion}");
+        Contrato contrato = _repo.Obtener(request.IdContrato);
+        bool ok = false;
+        if(contrato != null){
+            contrato.FechaAnulacion = request.fechaAnulacion;
+            _repo.Modificar(contrato);
+            int IdUsuario = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            int idCreado = _repoPago.Crear(new Pago{
+                contrato = contrato,
+                Estado = true,
+                Detalle = "Multa por contrato anulado",
+                FechaPago = request.fechaAnulacion,
+                Importe = request.multa,
+                IdContrato = request.IdContrato,
+                NumeroPago = "0"
+            }, IdUsuario);
+            if(idCreado > 0){ok=true;}else{ok=false;}
+        }
+        return Json(ok);
     }
 
     
@@ -83,6 +108,7 @@ public class ContratoController : Controller{
         return RedirectToAction("Index", "Home");
     }
 
+    [Authorize(Roles = "Administrador")]
     [HttpPost]
     public IActionResult Borrar(int id){
         try{

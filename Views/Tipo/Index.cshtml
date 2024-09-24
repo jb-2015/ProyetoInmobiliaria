@@ -27,10 +27,12 @@
                     <td>@item.Observacion</td>
                     <td>
                         <a href="@Url.Action("Editar", "Tipo", new { id = item.IdTipo })" class="btn btn-editar">Editar</a>
-                        <form asp-action="Borrar" method="post" style="display:inline;">
-                            <input type="hidden" name="id" value="@item.IdTipo" />
-                            <input type="submit" value="Eliminar" class="btn btn-eliminar" />
-                        </form>
+                        @if(User.IsInRole("Administrador")){
+                            <form asp-action="Borrar" method="post" style="display:inline;">
+                                <input type="hidden" name="id" value="@item.IdTipo" />
+                                <input type="submit" value="Eliminar" class="btn btn-eliminar" />
+                            </form>
+                        }
                     </td>
                 </tr>
             }

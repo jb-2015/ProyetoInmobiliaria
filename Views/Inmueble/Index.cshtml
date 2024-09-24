@@ -64,10 +64,12 @@
                 <td>@Html.DisplayFor(modelItem => item.Mascotas)</td>
                 <td>
                     <a href="@Url.Action("Editar", "Inmueble", new { id = item.IdInmueble })" class="btn btn-editar">Editar</a>
-                    <form asp-action="Borrar" method="post" style="display:inline;">
-                        <input type="hidden" name="id" value="@item.IdInmueble" />
-                        <input type="submit" value="Eliminar" class="btn btn-eliminar" />
-                    </form>
+                    @if(User.IsInRole("Administrador")){
+                        <form asp-action="Borrar" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@item.IdInmueble" />
+                            <input type="submit" value="Eliminar" class="btn btn-eliminar" />
+                        </form>
+                    }
                 </td>
             </tr>
         }
