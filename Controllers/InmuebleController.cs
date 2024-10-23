@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using ProyetoInmobiliaria.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Globalization;
+using System.Security.Claims;
 
 [Authorize]
 public class InmuebleController : Controller
@@ -163,5 +164,11 @@ public class InmuebleController : Controller
         catch(Exception){
             return RedirectToAction("Index");
         }
+    }
+
+    [HttpGet("api/inmueblePorPropietario")]
+    public IActionResult InmueblesPorPropietario(){
+        int idLoged = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        return Json(_repo.ListarPorPropietario(idLoged));
     }
 }

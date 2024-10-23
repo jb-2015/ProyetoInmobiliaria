@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ProyetoInmobiliaria.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 [Authorize]
 
@@ -26,6 +27,7 @@ public class PropietarioController : Controller{
         }
         return RedirectToAction("Index", "Home");
     }
+    
 
 
     public IActionResult Detalle(int id){
@@ -100,4 +102,23 @@ public class PropietarioController : Controller{
         var propietarios = repo.ListarPorEmail(Email);
         return Json(propietarios);
     }
+
+    // Endpoint para listar todos los propietarios
+    [HttpGet("Api_propietarios")]
+    public IActionResult Api_propietarios()
+    {
+        var propietarios = repo.Listar();
+        return Json(propietarios);
+    }
+
+    // Endpoint para obtener un propietario por ID
+    [HttpGet("Api_propietarios/{id}")]
+    public IActionResult Api_propietarios(int id)
+    {
+        var propietario = repo.Obtener(id);
+        return Json(propietario);
+    }
+    
+
+    
 }

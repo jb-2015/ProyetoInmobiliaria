@@ -1,26 +1,18 @@
 using MySql.Data.MySqlClient;
 using ProyetoInmobiliaria.Models;
 public class RepositorioPropietario:RepositorioBase{
+   private InmobiliariaContext _context;
+
     public RepositorioPropietario():base(){
+        _context = new InmobiliariaContext();
 
     }
     //CREAR
     public int Crear(Propietario propietario){
-        int idCreado = -1;
-        using(MySqlConnection connection = new MySqlConnection(ConnectionString)){
-            connection.Open();
-            string query = "INSERT INTO Propietario (dni, apellido, nombre, telefono, correo, estado)"+
-            "VALUES (@Dni, @Apellido, @Nombre, @Telefono, @Correo, true); SELECT LAST_INSERT_ID();";
-            using(MySqlCommand command = new MySqlCommand(query, connection)){
-                command.Parameters.AddWithValue("@Dni", propietario.Dni);
-                command.Parameters.AddWithValue("@Apellido", propietario.Apellido);
-                command.Parameters.AddWithValue("@Nombre", propietario.Nombre);
-                command.Parameters.AddWithValue("@Telefono", propietario.Telefono);
-                command.Parameters.AddWithValue("@Correo", propietario.Correo);
-                idCreado = Convert.ToInt32(command.ExecuteScalar());
-            }
-        }
-        return idCreado;
+                
+        _context.Propietario.Add(propietario);
+        _context.SaveChanges();
+        return propietario.IdPropietario;
     }
 
     //MODIFICAR
@@ -46,8 +38,8 @@ public class RepositorioPropietario:RepositorioBase{
 
     //LISTAR
     public List<Propietario> Listar(){
-        List<Propietario> Propietarios = new List<Propietario>();
-        using(MySqlConnection connection = new MySqlConnection(ConnectionString)){
+        //List<Propietario> Propietarios = new List<Propietario>();
+        /*using(MySqlConnection connection = new MySqlConnection(ConnectionString)){
             connection.Open();
             string query = "SELECT * FROM Propietario WHERE estado = true";
             using(MySqlCommand command = new MySqlCommand(query, connection)){
@@ -66,9 +58,13 @@ public class RepositorioPropietario:RepositorioBase{
                     }
                 }
             }
-        }
+        }*/
+    
+        var Propietarios= _context.Propietario.Where(p => p.Estado == true).ToList();
+
         return Propietarios;
     }
+    
 
     //LISTAR PROPIETARIOS QUE CONTIENEN AL MENOS UN INMUEBLE
     public List<Propietario> ListarPropietariosConInmuebles(){

@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 namespace ProyetoInmobiliaria.Models;
 public class Propietario{
     [Key]
-    
     public int IdPropietario { get; set; }
     
     [Required(ErrorMessage = "El DNI es obligatorio")]

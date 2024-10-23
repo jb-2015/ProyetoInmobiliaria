@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using ProyetoInmobiliaria.Models;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace ProyetoInmobiliaria.Models;
 
@@ -38,4 +41,26 @@ namespace ProyetoInmobiliaria.Models;
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index","Login");
         }
+
+        [HttpPost("api/login")]
+        public IActionResult Login([FromBody] LoginViewModel lvm){
+            RepositorioLogin _repoLogin = new RepositorioLogin();
+            Usuario u = _repoLogin.Verificar(new LoginViewModel { Email = lvm.Email , Password = lvm.Password });
+            if (u != null){
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.ASCII.GetBytes(u.Password);
+                var tokenDescriptor = new SecurityTokenDescriptor                
+                {
+                    Expires = DateTime.UtcNow.AddHours(1),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                };
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+
+                return Ok(new { token = tokenHandler.WriteToken(token) });
+            }else{
+                return BadRequest("Credenciales Incorrectas");
+            }
+        }
+
+
 }
