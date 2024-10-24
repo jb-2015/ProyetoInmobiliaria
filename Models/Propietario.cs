@@ -23,4 +23,5 @@ public class Propietario{
     [EmailAddress(ErrorMessage = "Formato de correo no válido.")]
     public string Correo { get; set; } = "";
     public Boolean Estado { get; set; }
+    public string  Clave {get; set;}="";
 }
