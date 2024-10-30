@@ -236,4 +236,8 @@ public class RepositorioPropietario:RepositorioBase{
         }
         return Propietarios;
     }
+    public Propietario VerificarPropietario(LoginViewModel loginViewModel)
+{
+    return _context.Propietario.FirstOrDefault(p => p.Correo == loginViewModel.Email && p.Clave == loginViewModel.Password);
+}
 } 

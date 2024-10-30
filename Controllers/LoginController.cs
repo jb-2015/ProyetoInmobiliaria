@@ -36,6 +36,7 @@ namespace ProyetoInmobiliaria.Models;
             }
             return Json(new {ok=false, mensaje="Usuario o contraseña incorrectos"});
         }
+        [HttpGet("logout")]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
@@ -44,11 +45,11 @@ namespace ProyetoInmobiliaria.Models;
 
         [HttpPost("api/login")]
         public IActionResult Login([FromBody] LoginViewModel lvm){
-            RepositorioLogin _repoLogin = new RepositorioLogin();
-            Usuario u = _repoLogin.Verificar(new LoginViewModel { Email = lvm.Email , Password = lvm.Password });
+            RepositorioPropietario _repoPropietario = new RepositorioPropietario();
+            Propietario u = _repoPropietario.VerificarPropietario(new LoginViewModel { Email = lvm.Email , Password = lvm.Password });
             if (u != null){
                 var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes(u.Password);
+                var key = Encoding.ASCII.GetBytes(u.Clave);
                 var tokenDescriptor = new SecurityTokenDescriptor                
                 {
                     Expires = DateTime.UtcNow.AddHours(1),
